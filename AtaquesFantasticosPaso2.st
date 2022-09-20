@@ -92,16 +92,16 @@ usarHacha
 	dañoAInfligir := 10*pv.! !
 
 
-!CombatienteHumanoArthas class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/18/2022 16:43:35'!
+!CombatienteHumanoArthas class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/20/2022 15:07:56'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
 	estrategia := ((SerializableBlockClosure basicNew instVarAt: 1 put: CombatienteHumanoArthas; instVarAt: 2 put: '[ :argm0_1 |
-	argm0_1 detectMax: [ :argm0_2 |
+	argm0_1 detectMin: [ :argm0_2 |
 		argm0_2 puntosDeVida ]. ]'; instVarAt: 3 put: #(); yourself) asEvaluable).
-	dañoAAbsorber := (SimpleMeasure basicNew instVarAt: 1 put: 0; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
-	dañoAInfligir := (SimpleMeasure basicNew instVarAt: 1 put: 10; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
-	puntosDeVida := (SimpleMeasure basicNew instVarAt: 1 put: 7; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
+	dañoAAbsorber := (SimpleMeasure basicNew instVarAt: 1 put: 6; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
+	dañoAInfligir := (SimpleMeasure basicNew instVarAt: 1 put: 2; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
+	puntosDeVida := (SimpleMeasure basicNew instVarAt: 1 put: 20; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
 	enemigos := ((Array new: 2) at: 1 put: CombatienteOrcoOlgra; at: 2 put: CombatienteOrcoMankrik; yourself).
 	bonificadorDeAgilidad := (SimpleMeasure basicNew instVarAt: 1 put: 1; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).! !
 
@@ -204,13 +204,13 @@ usarHacha
 	dañoAInfligir := 10*pv.! !
 
 
-!CombatienteOrcoMankrik class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/18/2022 16:43:35'!
+!CombatienteOrcoMankrik class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/20/2022 15:07:56'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
 	bonificadorDeFuerza := (SimpleMeasure basicNew instVarAt: 1 put: 2; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
 	enemigos := ((Array new: 1) at: 1 put: CombatienteHumanoArthas; yourself).
-	puntosDeVida := (SimpleMeasure basicNew instVarAt: 1 put: 0; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
+	puntosDeVida := (SimpleMeasure basicNew instVarAt: 1 put: 18; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
 	dañoAInfligir := (SimpleMeasure basicNew instVarAt: 1 put: 2; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
 	dañoAAbsorber := (SimpleMeasure basicNew instVarAt: 1 put: 0; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'puntosDeVida'; instVarAt: 2 put: 'puntosDeVidas'; instVarAt: 3 put: 'pv'; yourself); yourself).
 	estrategia := ((SerializableBlockClosure basicNew instVarAt: 1 put: CombatienteOrcoMankrik; instVarAt: 2 put: '[ :argm6_1 |
@@ -318,7 +318,7 @@ usarHacha
 	dañoAInfligir := 10*pv.! !
 
 
-!CombatienteOrcoOlgra class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/18/2022 16:43:35'!
+!CombatienteOrcoOlgra class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/20/2022 15:07:56'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -1124,11 +1124,6 @@ ningunBandoEstaFueraDeCombate
 
 	(self estanTodosFueraDeCombate: bando1) ifFalse: [(self estanTodosFueraDeCombate: bando2) ifFalse: [^true] ifTrue:[^false]] ifTrue: [^false].! !
 
-!orquestadorDeCombates class methodsFor: 'combate' stamp: 'UM 9/18/2022 16:04:30'!
-ningunoEstaFueraDeCombate
-
-	(self estanTodosFueraDeCombate: bando1) ifFalse: [(self estanTodosFueraDeCombate: bando2) ifFalse: [^true]]! !
-
 !orquestadorDeCombates class methodsFor: 'combate' stamp: 'UM 9/18/2022 15:44:20'!
 quienEsElGanadorEntre: Bando1 y: Bando2 
 	(self estanTodosFueraDeCombate: Bando1) ifTrue: [(self estanTodosFueraDeCombate: Bando2) ifFalse: [^ganoBando2]] ifFalse: [(self estanTodosFueraDeCombate: Bando2) ifTrue: [^ganoBando1] ifFalse: [^indeterminado]].
@@ -1146,15 +1141,15 @@ Bando2: unBando
 	bando2 := unBando.! !
 
 
-!orquestadorDeCombates class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/18/2022 16:43:35'!
+!orquestadorDeCombates class methodsFor: '--** private fileout/in **--' stamp: 'UM 9/20/2022 15:07:56'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
-	ganoBando2 := 4.
+	ganoBando2 := 10.
 	bando2 := ((Array new: 2) at: 1 put: CombatienteOrcoOlgra; at: 2 put: CombatienteOrcoMankrik; yourself).
 	bando1 := ((Array new: 1) at: 1 put: CombatienteHumanoArthas; yourself).
-	indeterminado := 4.
-	ganoBando1 := 4.! !
+	indeterminado := 10.
+	ganoBando1 := 10.! !
 
 CombatienteHumanoArthas initializeAfterFileIn!
 CombatienteOrcoMankrik initializeAfterFileIn!
