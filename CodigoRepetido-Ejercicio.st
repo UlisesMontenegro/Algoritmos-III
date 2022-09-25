@@ -1,4 +1,4 @@
-!classDefinition: #CantSuspend category: #'CodigoRepetido-Ejercicio'!
+!classDefinition: #CantSuspend category: 'CodigoRepetido-Ejercicio'!
 Error subclass: #CantSuspend
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -6,7 +6,7 @@ Error subclass: #CantSuspend
 	category: 'CodigoRepetido-Ejercicio'!
 
 
-!classDefinition: #NotFound category: #'CodigoRepetido-Ejercicio'!
+!classDefinition: #NotFound category: 'CodigoRepetido-Ejercicio'!
 Error subclass: #NotFound
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,43 +14,57 @@ Error subclass: #NotFound
 	category: 'CodigoRepetido-Ejercicio'!
 
 
-!classDefinition: #CustomerBookTest category: #'CodigoRepetido-Ejercicio'!
+!classDefinition: #CustomerBookTest category: 'CodigoRepetido-Ejercicio'!
 TestCase subclass: #CustomerBookTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 4/3/2019 10:50:19'!
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/24/2022 23:04:32'!
+mensajeANombrar: unaCantidadDeColaboradores
+	| millisecondsAfterRunning millisecondsBeforeRunning |
+	
+	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
+	unaCantidadDeColaboradores value.
+	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
+	^ (millisecondsAfterRunning - millisecondsBeforeRunning)! !
+
+
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/24/2022 23:03:35'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| customerBook millisecondsBeforeRunning millisecondsAfterRunning |
+	| customerBook tiempoQueTomaAgregarUnUsuario |
 	
 	customerBook := CustomerBook new.
 	
-	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-	customerBook addCustomerNamed: 'John Lennon'.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
+	tiempoQueTomaAgregarUnUsuario := self mensajeANombrar: [customerBook addCustomerNamed: 'John Lennon'].
 	
-	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < (50 * millisecond)
+	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
+	customerBook addCustomerNamed: 'John Lennon'.
+	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
+	
+	self assert: tiempoQueTomaAgregarUnUsuario < (50 * millisecond)
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 4/3/2019 10:50:13'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/24/2022 23:03:36'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
-	| customerBook millisecondsBeforeRunning millisecondsAfterRunning paulMcCartney |
+	| customerBook paulMcCartney tiempoQueTomaEliminarUnUsuario |
 	
 	customerBook := CustomerBook new.
 	paulMcCartney := 'Paul McCartney'.
 	
 	customerBook addCustomerNamed: paulMcCartney.
 	  
-	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-	customerBook removeCustomerNamed: paulMcCartney.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
+	tiempoQueTomaEliminarUnUsuario := self mensajeANombrar: [customerBook removeCustomerNamed: paulMcCartney.].
 	
-	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < (100 * millisecond)
+	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
+	customerBook removeCustomerNamed: paulMcCartney.
+	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
+	
+	self assert: tiempoQueTomaEliminarUnUsuario < (100 * millisecond)
 	
 ! !
 
@@ -162,7 +176,7 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 ! !
 
 
-!classDefinition: #CustomerBook category: #'CodigoRepetido-Ejercicio'!
+!classDefinition: #CustomerBook category: 'CodigoRepetido-Ejercicio'!
 Object subclass: #CustomerBook
 	instanceVariableNames: 'suspended active'
 	classVariableNames: ''
@@ -257,7 +271,7 @@ suspendCustomerNamed: aName
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CustomerBook class' category: #'CodigoRepetido-Ejercicio'!
+!classDefinition: 'CustomerBook class' category: 'CodigoRepetido-Ejercicio'!
 CustomerBook class
 	instanceVariableNames: ''!
 
