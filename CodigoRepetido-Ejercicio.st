@@ -16,10 +16,15 @@ Error subclass: #NotFound
 
 !classDefinition: #CustomerBookTest category: 'CodigoRepetido-Ejercicio'!
 TestCase subclass: #CustomerBookTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'customerBook'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
+
+!CustomerBookTest methodsFor: 'initialize' stamp: 'VDM 9/26/2022 15:32:31'!
+initialize
+	customerBook := CustomerBook new.! !
+
 
 !CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/24/2022 23:04:32'!
 mensajeANombrar: unaCantidadDeColaboradores
@@ -31,49 +36,47 @@ mensajeANombrar: unaCantidadDeColaboradores
 	^ (millisecondsAfterRunning - millisecondsBeforeRunning)! !
 
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/24/2022 23:03:35'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:36:31'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| customerBook tiempoQueTomaAgregarUnUsuario |
+	| tiempoQueDemoraAgregarUnCliente |
 	
-	customerBook := CustomerBook new.
+	"customerBook := CustomerBook new."
 	
-	tiempoQueTomaAgregarUnUsuario := self mensajeANombrar: [customerBook addCustomerNamed: 'John Lennon'].
+	tiempoQueDemoraAgregarUnCliente := self mensajeANombrar: [customerBook addCustomerNamed: 'John Lennon'].
 	
 	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
 	customerBook addCustomerNamed: 'John Lennon'.
 	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
 	
-	self assert: tiempoQueTomaAgregarUnUsuario < (50 * millisecond)
+	self assert: tiempoQueDemoraAgregarUnCliente < (50 * millisecond)
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/24/2022 23:03:36'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:37:34'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
-	| customerBook paulMcCartney tiempoQueTomaEliminarUnUsuario |
+	| paulMcCartney tiempoQueDemoraEliminarUnCliente |
 	
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 	paulMcCartney := 'Paul McCartney'.
 	
 	customerBook addCustomerNamed: paulMcCartney.
 	  
-	tiempoQueTomaEliminarUnUsuario := self mensajeANombrar: [customerBook removeCustomerNamed: paulMcCartney.].
+	tiempoQueDemoraEliminarUnCliente := self mensajeANombrar: [customerBook removeCustomerNamed: paulMcCartney.].
 	
 	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
 	customerBook removeCustomerNamed: paulMcCartney.
 	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
 	
-	self assert: tiempoQueTomaEliminarUnUsuario < (100 * millisecond)
+	self assert: tiempoQueDemoraEliminarUnCliente < (100 * millisecond)
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'HernanWilkinson 5/9/2012 18:12'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:38:31'!
 test03CanNotAddACustomerWithEmptyName 
 
-	| customerBook |
-			
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 
 	[ customerBook addCustomerNamed: ''.
 	self fail ]
@@ -82,12 +85,12 @@ test03CanNotAddACustomerWithEmptyName
 			self assert: anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage.
 			self assert: customerBook isEmpty ]! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'HAW 8/28/2017 08:57:25'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:39:18'!
 test04CanNotRemoveAnInvalidCustomer
 	
-	| customerBook johnLennon |
+	| johnLennon |
 			
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
 	
@@ -99,12 +102,12 @@ test04CanNotRemoveAnInvalidCustomer
 			self assert: (customerBook includesCustomerNamed: johnLennon) ]
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 4/3/2019 10:50:25'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:40:10'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 
-	| customerBook paulMcCartney|
+	| paulMcCartney|
 	
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 	paulMcCartney := 'Paul McCartney'.
 	
 	customerBook addCustomerNamed: paulMcCartney.
@@ -119,12 +122,12 @@ test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 4/3/2019 10:50:28'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:41:24'!
 test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 
-	| customerBook paulMcCartney|
+	| paulMcCartney|
 	
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 	paulMcCartney := 'Paul McCartney'.
 	
 	customerBook addCustomerNamed: paulMcCartney.
@@ -140,12 +143,12 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 4/30/2020 09:08:46'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:42:35'!
 test07CanNotSuspendAnInvalidCustomer
 	
-	| customerBook johnLennon |
+	| johnLennon |
 			
-	customerBook := CustomerBook new.
+	"customerBook := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
 	
@@ -157,12 +160,12 @@ test07CanNotSuspendAnInvalidCustomer
 			self assert: (customerBook includesCustomerNamed: johnLennon) ]
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'NR 9/19/2018 17:57:11'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:43:12'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
-	| customerBook johnLennon |
+	| johnLennon |
 			
-	customerBook := CustomerBook new.
+	"customerBookViejo := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
 	customerBook suspendCustomerNamed: johnLennon.
