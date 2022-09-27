@@ -21,22 +21,31 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'initialize' stamp: 'VDM 9/26/2022 15:32:31'!
-initialize
-	customerBook := CustomerBook new.! !
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 04:48:32'!
+asercionEjecucionEstaDentroDeLimiteDeTiempo: unTiempoMedido conLimite: limiteDeTiempo
+	
+	self assert: unTiempoMedido < limiteDeTiempo.! !
 
-
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/24/2022 23:04:32'!
-mensajeANombrar: unaCantidadDeColaboradores
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:06:11'!
+mensajeANombrar: unBloque
 	| millisecondsAfterRunning millisecondsBeforeRunning |
 	
-	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-	unaCantidadDeColaboradores value.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
-	^ (millisecondsAfterRunning - millisecondsBeforeRunning)! !
+	millisecondsBeforeRunning := self tiempoEnMilisegundos.
+	unBloque value.
+	millisecondsAfterRunning := self tiempoEnMilisegundos.
+	^ self tiempoTranscurridoEntre: millisecondsAfterRunning y: millisecondsBeforeRunning.! !
+
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:05:54'!
+tiempoEnMilisegundos
+	
+	^ Time millisecondClockValue * millisecond.! !
+
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:05:06'!
+tiempoTranscurridoEntre: tiempoFinal y: tiempoInicial
+	^ tiempoFinal - tiempoInicial.! !
 
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:36:31'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 04:49:28'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
 	| tiempoQueDemoraAgregarUnCliente |
@@ -49,11 +58,13 @@ test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 	customerBook addCustomerNamed: 'John Lennon'.
 	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
 	
-	self assert: tiempoQueDemoraAgregarUnCliente < (50 * millisecond)
+	self asercionEjecucionEstaDentroDeLimiteDeTiempo: tiempoQueDemoraAgregarUnCliente conLimite: (50 * millisecond).
+	
+	"self assert: tiempoQueDemoraAgregarUnCliente < (50 * millisecond)"
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:37:34'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 04:50:13'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
 	| paulMcCartney tiempoQueDemoraEliminarUnCliente |
@@ -69,7 +80,9 @@ test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 	customerBook removeCustomerNamed: paulMcCartney.
 	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
 	
-	self assert: tiempoQueDemoraEliminarUnCliente < (100 * millisecond)
+	self asercionEjecucionEstaDentroDeLimiteDeTiempo: tiempoQueDemoraEliminarUnCliente conLimite: (100 * millisecond).
+	
+	"self assert: tiempoQueDemoraEliminarUnCliente < (100 * millisecond)"
 	
 ! !
 
@@ -177,6 +190,11 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 			self assert: customerBook numberOfCustomers = 1.
 			self assert: (customerBook includesCustomerNamed: johnLennon) ]
 ! !
+
+
+!CustomerBookTest methodsFor: 'inicializador' stamp: 'VDM 9/26/2022 15:55:55'!
+initialize
+	customerBook := CustomerBook new.! !
 
 
 !classDefinition: #CustomerBook category: 'CodigoRepetido-Ejercicio'!
