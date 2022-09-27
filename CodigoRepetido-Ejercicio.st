@@ -29,138 +29,42 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 04:48:32'!
-asercionEjecucionEstaDentroDeLimiteDeTiempo: unTiempoMedido conLimite: limiteDeTiempo
-	
-	self assert: unTiempoMedido < limiteDeTiempo.! !
-
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 09:27:44'!
-comprobarErrorEn: unBloque conVerificacion1: asercionA yVerificacion2: asercionB
-	
-	[ unBloque ] value
-		on: Error
-		do: [ :unError | 
-			unError class = EmptyName ifTrue:[
-				self assert: (asercionA value: unError).
-				self assert: asercionB.
-				^ self.
-				].
-			unError class = NotFound ifTrue:[
-				self assert: asercionA.
-				self assert: asercionB.
-				^ self.
-				].
-			unError class = CantSuspend ifTrue:[
-				self assert: asercionA.
-				self assert: asercionB.
-				^ self.
-				].
-			].
-	self fail.
-! !
-
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:06:11'!
-mensajeANombrar: unBloque
-	| millisecondsAfterRunning millisecondsBeforeRunning |
-	
-	millisecondsBeforeRunning := self tiempoEnMilisegundos.
-	unBloque value.
-	millisecondsAfterRunning := self tiempoEnMilisegundos.
-	^ self tiempoTranscurridoEntre: millisecondsAfterRunning y: millisecondsBeforeRunning.! !
-
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:05:54'!
-tiempoEnMilisegundos
-	
-	^ Time millisecondClockValue * millisecond.! !
-
-!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:05:06'!
-tiempoTranscurridoEntre: tiempoFinal y: tiempoInicial
-	^ tiempoFinal - tiempoInicial.! !
-
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 04:49:28'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:43:17'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| tiempoQueDemoraAgregarUnCliente |
-	
-	"customerBook := CustomerBook new."
-	
-	tiempoQueDemoraAgregarUnCliente := self mensajeANombrar: [customerBook addCustomerNamed: 'John Lennon'].
-	
-	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-	customerBook addCustomerNamed: 'John Lennon'.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
-	
-	self asercionEjecucionEstaDentroDeLimiteDeTiempo: tiempoQueDemoraAgregarUnCliente conLimite: (50 * millisecond).
-	
-	"self assert: tiempoQueDemoraAgregarUnCliente < (50 * millisecond)"
-	
-! !
+	| addingCustomerDuration |
+	addingCustomerDuration := self blockExecuteDuration: [customerBook addCustomerNamed: 'John Lennon'].
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 04:50:13'!
+	self assertBlockExecuteDuration: addingCustomerDuration isLessThan: (50 * millisecond).! !
+
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:43:47'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
-	| paulMcCartney tiempoQueDemoraEliminarUnCliente |
-	
-	"customerBookViejo := CustomerBook new."
+	| paulMcCartney removingCustomerDuration |
 	paulMcCartney := 'Paul McCartney'.
-	
 	customerBook addCustomerNamed: paulMcCartney.
-	  
-	tiempoQueDemoraEliminarUnCliente := self mensajeANombrar: [customerBook removeCustomerNamed: paulMcCartney.].
+	removingCustomerDuration := self blockExecuteDuration: [customerBook removeCustomerNamed: paulMcCartney.].
 	
-	"millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-	customerBook removeCustomerNamed: paulMcCartney.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond."
-	
-	self asercionEjecucionEstaDentroDeLimiteDeTiempo: tiempoQueDemoraEliminarUnCliente conLimite: (100 * millisecond).
-	
-	"self assert: tiempoQueDemoraEliminarUnCliente < (100 * millisecond)"
-	
-! !
+	self assertBlockExecuteDuration: removingCustomerDuration isLessThan: (100 * millisecond).! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:08:13'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:44:36'!
 test03CanNotAddACustomerWithEmptyName 
-
-	"customerBookViejo := CustomerBook new."
-	| bloqueAEvaluar asercionA asercionB |
+	| blockToBeEvaluated assertionA assertionB |
 	
-	bloqueAEvaluar := [ customerBook addCustomerNamed: ''. self fail ].
+	blockToBeEvaluated := [ customerBook addCustomerNamed: ''. self fail ].	
+	assertionA := [:elError | elError messageText = CustomerBook customerCanNotBeEmptyErrorMessage].
+	assertionB := (customerBook isEmpty).
 	
-	asercionA := [:elError | elError messageText = CustomerBook customerCanNotBeEmptyErrorMessage].
-	asercionB := (customerBook isEmpty).
-	
-	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
+	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB.! !
 
-	"[ customerBook addCustomerNamed: ''.
-	self fail ]
-		on: Error 
-		do: [ :anError | 
-			self assert: anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage.
-			self assert: customerBook isEmpty ]"! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:13:03'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:45:07'!
 test04CanNotRemoveAnInvalidCustomer
+	| johnLennon assertionA assertionB blockToBeEvaluated |
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook removeCustomerNamed: 'Paul McCartney'. 	self fail ].
+	assertionA := (customerBook numberOfCustomers = 1).
+	assertionB := (customerBook includesCustomerNamed: johnLennon).
 	
-	| johnLennon asercionA asercionB bloqueAEvaluar |
-			
-	"customerBookViejo := CustomerBook new."
-	johnLennon := 'John Lennon'.
-	customerBook addCustomerNamed: johnLennon.
-		bloqueAEvaluar := [ customerBook removeCustomerNamed: 'Paul McCartney'. 	self fail ].
-	
-	asercionA := (customerBook numberOfCustomers = 1).
-	asercionB := (customerBook includesCustomerNamed: johnLennon).
-	
-	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
-
-	"[ customerBook removeCustomerNamed: 'Paul McCartney'.
-	self fail ]
-		on: NotFound 
-		do: [ :anError | 
-			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
-! !
+	self verifyErrorInBlock:  blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB.! !
 
 !CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:40:10'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
@@ -203,54 +107,73 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:23:17'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:45:53'!
 test07CanNotSuspendAnInvalidCustomer
+	| johnLennon assertionA assertionB blockToBeEvaluated |
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook suspendCustomerNamed: 'Ringo Starr'. 	self fail ].
+	assertionA := (customerBook numberOfCustomers = 1).
+	assertionB := (customerBook includesCustomerNamed: johnLennon).
 	
-	| johnLennon asercionA asercionB bloqueAEvaluar |
-			
-	"customerBook := CustomerBook new."
-	johnLennon := 'John Lennon'.
-	customerBook addCustomerNamed: johnLennon.
-	
-	bloqueAEvaluar := [ customerBook suspendCustomerNamed: 'Ringo Starr'. 	self fail ].
-	
-	asercionA := (customerBook numberOfCustomers = 1).
-	asercionB := (customerBook includesCustomerNamed: johnLennon).
-	
-	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
-	
-	"[ customerBook suspendCustomerNamed: 'Ringo Starr'.
-	self fail ]
-		on: CantSuspend 
-		do: [ :anError | 
-			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
-! !
+	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB. ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:26:18'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:46:17'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
+	| johnLennon assertionA assertionB blockToBeEvaluated |
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	customerBook suspendCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook suspendCustomerNamed: johnLennon. 	self fail ].
+	assertionA := (customerBook numberOfCustomers = 1).
+	assertionB := (customerBook includesCustomerNamed: johnLennon).
 	
-	| johnLennon asercionA asercionB bloqueAEvaluar |
-			
-	"customerBookViejo := CustomerBook new."
-	johnLennon := 'John Lennon'.
-	customerBook addCustomerNamed: johnLennon.
-	customerBook suspendCustomerNamed: johnLennon.
+	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB. ! !
+
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:17:29'!
+assertBlockExecuteDuration: aMeasuredTime isLessThan: timeLimit
 	
-	bloqueAEvaluar := [ customerBook suspendCustomerNamed: johnLennon. 	self fail ].
+	aMeasuredTime < timeLimit value.! !
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:23:14'!
+blockExecuteDuration: aBlock
+
+	|millisecondsBeforeRunning millisecondsAfterRunning|
+
+	millisecondsBeforeRunning := self timeInMilliseconds.
+	aBlock value.
+	millisecondsAfterRunning := self timeInMilliseconds.
+
+	^self timeElapsedBetween: millisecondsBeforeRunning and: millisecondsAfterRunning.! !
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:10:08'!
+timeElapsedBetween: finalTime and: initialTime
+	^ finalTime - initialTime.! !
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:22:07'!
+timeInMilliseconds
 	
-	asercionA := (customerBook numberOfCustomers = 1).
-	asercionB := (customerBook includesCustomerNamed: johnLennon).
+	^ Time millisecondClockValue * millisecond.! !
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:35:56'!
+verifyErrorInBlock: aBlock underVerification1: verification1 andVerification2: verification2
 	
-	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
-	
-	"[ customerBook suspendCustomerNamed: johnLennon.
-	self fail ]
-		on: CantSuspend 
+	[ aBlock ] value
+		on: Error
 		do: [ :anError | 
-			
-			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
+			anError class = EmptyName ifTrue:[
+				self assert: (verification1 value: anError).
+				self assert: verification2.
+				^ self.
+				].
+			anError class = NotFound ifTrue:[
+				self assert: verification1.
+				self assert: verification2.
+				^ self.
+				].
+			anError class = CantSuspend ifTrue:[
+				self assert: verification1.
+				self assert: verification2.
+				^ self.
+				].
+			].
+	self fail.
 ! !
 
 
