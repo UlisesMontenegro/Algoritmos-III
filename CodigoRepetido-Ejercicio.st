@@ -230,13 +230,17 @@ removeCustomer: aName fromInstanceVariable: anInstanceVariable
 
 	^NotFound signal.! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'UM 9/27/2022 15:47:46'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VDM 9/27/2022 17:09:27'!
 removeCustomerNamed: aName 
 	|result|
 	
-	result := self removeCustomer: aName fromInstanceVariable: active.
+	[result := self removeCustomer: aName fromInstanceVariable: active. ^result.]
+	on: NotFound do: [^ self removeCustomer: aName fromInstanceVariable: suspended].
+	
+	
+	"result := self removeCustomer: aName fromInstanceVariable: active.
 	result = NotFound ifTrue: [^	self removeCustomer: aName fromInstanceVariable: suspended].
-	^result. 
+	^result. "
 	
 	"1 to: active size do: 
 	[ :index |
