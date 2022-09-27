@@ -6,6 +6,14 @@ Error subclass: #CantSuspend
 	category: 'CodigoRepetido-Ejercicio'!
 
 
+!classDefinition: #EmptyName category: 'CodigoRepetido-Ejercicio'!
+Error subclass: #EmptyName
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CodigoRepetido-Ejercicio'!
+
+
 !classDefinition: #NotFound category: 'CodigoRepetido-Ejercicio'!
 Error subclass: #NotFound
 	instanceVariableNames: ''
@@ -25,6 +33,31 @@ TestCase subclass: #CustomerBookTest
 asercionEjecucionEstaDentroDeLimiteDeTiempo: unTiempoMedido conLimite: limiteDeTiempo
 	
 	self assert: unTiempoMedido < limiteDeTiempo.! !
+
+!CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 09:27:44'!
+comprobarErrorEn: unBloque conVerificacion1: asercionA yVerificacion2: asercionB
+	
+	[ unBloque ] value
+		on: Error
+		do: [ :unError | 
+			unError class = EmptyName ifTrue:[
+				self assert: (asercionA value: unError).
+				self assert: asercionB.
+				^ self.
+				].
+			unError class = NotFound ifTrue:[
+				self assert: asercionA.
+				self assert: asercionB.
+				^ self.
+				].
+			unError class = CantSuspend ifTrue:[
+				self assert: asercionA.
+				self assert: asercionB.
+				^ self.
+				].
+			].
+	self fail.
+! !
 
 !CustomerBookTest methodsFor: 'abstracciones' stamp: 'VDM 9/27/2022 05:06:11'!
 mensajeANombrar: unBloque
@@ -86,33 +119,47 @@ test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:38:31'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:08:13'!
 test03CanNotAddACustomerWithEmptyName 
 
 	"customerBookViejo := CustomerBook new."
+	| bloqueAEvaluar asercionA asercionB |
+	
+	bloqueAEvaluar := [ customerBook addCustomerNamed: ''. self fail ].
+	
+	asercionA := [:elError | elError messageText = CustomerBook customerCanNotBeEmptyErrorMessage].
+	asercionB := (customerBook isEmpty).
+	
+	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
 
-	[ customerBook addCustomerNamed: ''.
+	"[ customerBook addCustomerNamed: ''.
 	self fail ]
 		on: Error 
 		do: [ :anError | 
 			self assert: anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage.
-			self assert: customerBook isEmpty ]! !
+			self assert: customerBook isEmpty ]"! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:39:18'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:13:03'!
 test04CanNotRemoveAnInvalidCustomer
 	
-	| johnLennon |
+	| johnLennon asercionA asercionB bloqueAEvaluar |
 			
 	"customerBookViejo := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
+		bloqueAEvaluar := [ customerBook removeCustomerNamed: 'Paul McCartney'. 	self fail ].
 	
-	[ customerBook removeCustomerNamed: 'Paul McCartney'.
+	asercionA := (customerBook numberOfCustomers = 1).
+	asercionB := (customerBook includesCustomerNamed: johnLennon).
+	
+	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
+
+	"[ customerBook removeCustomerNamed: 'Paul McCartney'.
 	self fail ]
 		on: NotFound 
 		do: [ :anError | 
 			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]
+			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
 ! !
 
 !CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:40:10'!
@@ -156,39 +203,54 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:42:35'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:23:17'!
 test07CanNotSuspendAnInvalidCustomer
 	
-	| johnLennon |
+	| johnLennon asercionA asercionB bloqueAEvaluar |
 			
 	"customerBook := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
 	
-	[ customerBook suspendCustomerNamed: 'Ringo Starr'.
+	bloqueAEvaluar := [ customerBook suspendCustomerNamed: 'Ringo Starr'. 	self fail ].
+	
+	asercionA := (customerBook numberOfCustomers = 1).
+	asercionB := (customerBook includesCustomerNamed: johnLennon).
+	
+	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
+	
+	"[ customerBook suspendCustomerNamed: 'Ringo Starr'.
 	self fail ]
 		on: CantSuspend 
 		do: [ :anError | 
 			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]
+			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:43:12'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/27/2022 09:26:18'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	
-	| johnLennon |
+	| johnLennon asercionA asercionB bloqueAEvaluar |
 			
 	"customerBookViejo := CustomerBook new."
 	johnLennon := 'John Lennon'.
 	customerBook addCustomerNamed: johnLennon.
 	customerBook suspendCustomerNamed: johnLennon.
 	
-	[ customerBook suspendCustomerNamed: johnLennon.
+	bloqueAEvaluar := [ customerBook suspendCustomerNamed: johnLennon. 	self fail ].
+	
+	asercionA := (customerBook numberOfCustomers = 1).
+	asercionB := (customerBook includesCustomerNamed: johnLennon).
+	
+	self comprobarErrorEn: bloqueAEvaluar conVerificacion1: asercionA yVerificacion2: asercionB.
+	
+	"[ customerBook suspendCustomerNamed: johnLennon.
 	self fail ]
 		on: CantSuspend 
 		do: [ :anError | 
+			
 			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: johnLennon) ]
+			self assert: (customerBook includesCustomerNamed: johnLennon) ]"
 ! !
 
 
@@ -223,11 +285,11 @@ initialize
 	suspended:= OrderedCollection new.! !
 
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VDM 9/27/2022 08:49:26'!
 addCustomerNamed: aName
 
-	aName isEmpty ifTrue: [ self signalCustomerNameCannotBeEmpty ].
-	((active includes: aName) or: [suspended includes: aName]) ifTrue: [ self signalCustomerAlreadyExists ].
+	aName isEmpty ifTrue: [ ^ (self signalCustomerNameCannotBeEmpty) signal ].
+	((active includes: aName) or: [suspended includes: aName]) ifTrue: [ ^(self signalCustomerAlreadyExists) signal].
 	
 	active add: aName ! !
 
@@ -275,10 +337,11 @@ signalCustomerAlreadyExists
 
 	self error: self class customerAlreadyExistsErrorMessage! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'HernanWilkinson 7/6/2011 17:51'!
+!CustomerBook methodsFor: 'customer management' stamp: 'VDM 9/27/2022 08:42:52'!
 signalCustomerNameCannotBeEmpty 
 
-	self error: self class customerCanNotBeEmptyErrorMessage ! !
+	^ (EmptyName new) messageText: self class customerCanNotBeEmptyErrorMessage.
+	"self error: self class customerCanNotBeEmptyErrorMessage "! !
 
 !CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
 suspendCustomerNamed: aName 
