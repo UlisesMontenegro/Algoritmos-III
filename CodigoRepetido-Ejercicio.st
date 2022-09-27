@@ -29,107 +29,108 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:43:17'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 14:31:13'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 
-	| addingCustomerDuration |
+	| addingCustomerDuration maxDuration|
+	maxDuration := 50*millisecond.
 	addingCustomerDuration := self blockExecuteDuration: [customerBook addCustomerNamed: 'John Lennon'].
 
-	self assertBlockExecuteDuration: addingCustomerDuration isLessThan: (50 * millisecond).! !
+	self assertBlockExecuteDuration: addingCustomerDuration isLessThan: (maxDuration).! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:43:47'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 14:32:01'!
 test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 
-	| paulMcCartney removingCustomerDuration |
+	| paulMcCartney removingCustomerDuration maxDuration|
+	maxDuration := 100 * millisecond.
 	paulMcCartney := 'Paul McCartney'.
 	customerBook addCustomerNamed: paulMcCartney.
 	removingCustomerDuration := self blockExecuteDuration: [customerBook removeCustomerNamed: paulMcCartney.].
 	
-	self assertBlockExecuteDuration: removingCustomerDuration isLessThan: (100 * millisecond).! !
+	self assertBlockExecuteDuration: removingCustomerDuration isLessThan: (maxDuration).! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:44:36'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 15:10:55'!
 test03CanNotAddACustomerWithEmptyName 
-	| blockToBeEvaluated assertionA assertionB |
+	| assertionA assertionB |
 	
-	blockToBeEvaluated := [ customerBook addCustomerNamed: ''. self fail ].	
-	assertionA := [:elError | elError messageText = CustomerBook customerCanNotBeEmptyErrorMessage].
+	assertionA := [:anError | anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage].
 	assertionB := (customerBook isEmpty).
-	
-	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB.! !
+	[ customerBook addCustomerNamed: ''. self fail ]
+	on: Error
+	do: [self verifyErrorUnderVerification1: assertionA andVerification2: assertionB].! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:45:07'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 15:12:04'!
 test04CanNotRemoveAnInvalidCustomer
-	| johnLennon assertionA assertionB blockToBeEvaluated |
-	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook removeCustomerNamed: 'Paul McCartney'. 	self fail ].
-	assertionA := (customerBook numberOfCustomers = 1).
+	| johnLennon assertionA assertionB numberOfCustomersExpected|
+	numberOfCustomersExpected := 1.
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.
+	assertionA := (customerBook numberOfCustomers = numberOfCustomersExpected).
 	assertionB := (customerBook includesCustomerNamed: johnLennon).
-	
-	self verifyErrorInBlock:  blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB.! !
+	[ customerBook removeCustomerNamed: 'Paul McCartney'. 	self fail ]
+	on: Error
+	do: [self verifyErrorUnderVerification1:  assertionA andVerification2: assertionB].
+! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:40:10'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 14:28:18'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
+	| paulMcCartney numberOfCustomersExpected numberOfSuspendedCustomersExpected numberOfActiveCustomersExpected expectedStatus|
+	numberOfCustomersExpected := 1.
+	numberOfSuspendedCustomersExpected := 1.
+	numberOfActiveCustomersExpected := 0.
+	expectedStatus := OrderedCollection with: numberOfActiveCustomersExpected with: numberOfSuspendedCustomersExpected with: numberOfCustomersExpected.
+	
+	paulMcCartney := 'Paul McCartney'.	customerBook addCustomerNamed: paulMcCartney.	customerBook suspendCustomerNamed: paulMcCartney.
+	self assertCustomerBookStatusIsEqualTo: expectedStatus.
+	self assert: (customerBook includesCustomerNamed: paulMcCartney).! !
 
-	| paulMcCartney|
-	
-	"customerBookViejo := CustomerBook new."
-	paulMcCartney := 'Paul McCartney'.
-	
-	customerBook addCustomerNamed: paulMcCartney.
-	customerBook suspendCustomerNamed: paulMcCartney.
-	
-	self assert: 0 equals: customerBook numberOfActiveCustomers.
-	self assert: 1 equals: customerBook numberOfSuspendedCustomers.
-	self assert: 1 equals: customerBook numberOfCustomers.
-	self assert: (customerBook includesCustomerNamed: paulMcCartney).
-	
-
-	
-! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'VDM 9/26/2022 15:41:24'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 14:30:17'!
 test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
-
-	| paulMcCartney|
+	| paulMcCartney numberOfCustomersExpected numberOfSuspendedCustomersExpected numberOfActiveCustomersExpected expectedStatus|
 	
-	"customerBookViejo := CustomerBook new."
-	paulMcCartney := 'Paul McCartney'.
+	numberOfCustomersExpected := 0.
+	numberOfSuspendedCustomersExpected := 0.
+	numberOfActiveCustomersExpected := 0.
+	expectedStatus := OrderedCollection with: numberOfActiveCustomersExpected with: numberOfSuspendedCustomersExpected with: numberOfCustomersExpected.
 	
-	customerBook addCustomerNamed: paulMcCartney.
-	customerBook suspendCustomerNamed: paulMcCartney.
-	customerBook removeCustomerNamed: paulMcCartney.
-	
-	self assert: 0 equals: customerBook numberOfActiveCustomers.
-	self assert: 0 equals: customerBook numberOfSuspendedCustomers.
-	self assert: 0 equals: customerBook numberOfCustomers.
-	self deny: (customerBook includesCustomerNamed: paulMcCartney).
+	paulMcCartney := 'Paul McCartney'.	customerBook addCustomerNamed: paulMcCartney.	customerBook suspendCustomerNamed: paulMcCartney.	customerBook removeCustomerNamed: paulMcCartney.
+	self assertCustomerBookStatusIsEqualTo: expectedStatus.
+	self deny: (customerBook includesCustomerNamed: paulMcCartney).! !
 
-
-	
-! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:45:53'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 15:13:31'!
 test07CanNotSuspendAnInvalidCustomer
-	| johnLennon assertionA assertionB blockToBeEvaluated |
-	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook suspendCustomerNamed: 'Ringo Starr'. 	self fail ].
-	assertionA := (customerBook numberOfCustomers = 1).
+	| johnLennon assertionA assertionB numberOfCustomersExpected|
+	numberOfCustomersExpected := 1.
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	assertionA := (customerBook numberOfCustomers = numberOfCustomersExpected).
 	assertionB := (customerBook includesCustomerNamed: johnLennon).
-	
-	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB. ! !
+	[ customerBook suspendCustomerNamed: 'Ringo Starr'. 	self fail ]
+	on: Error
+	do: [self verifyErrorUnderVerification1: assertionA andVerification2: assertionB].! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 12:46:17'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'UM 9/27/2022 15:14:17'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
-	| johnLennon assertionA assertionB blockToBeEvaluated |
-	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	customerBook suspendCustomerNamed: johnLennon.	blockToBeEvaluated := [ customerBook suspendCustomerNamed: johnLennon. 	self fail ].
-	assertionA := (customerBook numberOfCustomers = 1).
+	| johnLennon assertionA assertionB numberOfCustomersExpected|
+	numberOfCustomersExpected := 1.
+	johnLennon := 'John Lennon'.	customerBook addCustomerNamed: johnLennon.	customerBook suspendCustomerNamed: johnLennon.
+	assertionA := (customerBook numberOfCustomers = numberOfCustomersExpected).
 	assertionB := (customerBook includesCustomerNamed: johnLennon).
-	
-	self verifyErrorInBlock: blockToBeEvaluated underVerification1: assertionA andVerification2: assertionB. ! !
+	[ customerBook suspendCustomerNamed: johnLennon. 	self fail ]
+	on: Error
+	do: [self verifyErrorUnderVerification1: assertionA andVerification2: assertionB].! !
 
 
 !CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:17:29'!
 assertBlockExecuteDuration: aMeasuredTime isLessThan: timeLimit
 	
 	aMeasuredTime < timeLimit value.! !
+
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 14:26:52'!
+assertCustomerBookStatusIsEqualTo: aCollection
+
+	|currentCustomerBookStatus|
+	
+	currentCustomerBookStatus := OrderedCollection with: customerBook numberOfActiveCustomers with: customerBook numberOfSuspendedCustomers with: customerBook numberOfCustomers.
+	
+	self assert: currentCustomerBookStatus equals: aCollection! !
 
 !CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:23:14'!
 blockExecuteDuration: aBlock
@@ -151,30 +152,14 @@ timeInMilliseconds
 	
 	^ Time millisecondClockValue * millisecond.! !
 
-!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 12:35:56'!
-verifyErrorInBlock: aBlock underVerification1: verification1 andVerification2: verification2
-	
-	[ aBlock ] value
-		on: Error
-		do: [ :anError | 
-			anError class = EmptyName ifTrue:[
-				self assert: (verification1 value: anError).
-				self assert: verification2.
-				^ self.
-				].
-			anError class = NotFound ifTrue:[
-				self assert: verification1.
-				self assert: verification2.
-				^ self.
-				].
-			anError class = CantSuspend ifTrue:[
-				self assert: verification1.
-				self assert: verification2.
-				^ self.
-				].
-			].
-	self fail.
-! !
+!CustomerBookTest methodsFor: 'customer testing management' stamp: 'UM 9/27/2022 15:15:09'!
+verifyErrorUnderVerification1: verification1 andVerification2: verification2
+
+	[:anError | anError class = EmptyName ifTrue: [self assert: (verification1 value: anError). self assert: verification2. ^self].
+			((anError class = NotFound) or: (anError class = CantSuspend)) ifFalse: [^self fail].
+			self assert: verification1.
+			self assert: verification2.
+			^self.]! !
 
 
 !CustomerBookTest methodsFor: 'inicializador' stamp: 'VDM 9/26/2022 15:55:55'!
@@ -231,10 +216,29 @@ numberOfSuspendedCustomers
 	
 	^suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'NR 4/3/2019 10:14:26'!
+!CustomerBook methodsFor: 'customer management' stamp: 'UM 9/27/2022 15:36:26'!
+removeCustomer: aName fromInstanceVariable: anInstanceVariable
+
+	1 to: anInstanceVariable size do: 
+	[ :index |
+		aName = (anInstanceVariable at: index)
+			ifTrue: [
+				anInstanceVariable removeAt: index.
+				^ aName 
+			] 
+	].
+
+	^NotFound signal.! !
+
+!CustomerBook methodsFor: 'customer management' stamp: 'UM 9/27/2022 15:47:46'!
 removeCustomerNamed: aName 
- 
-	1 to: active size do: 
+	|result|
+	
+	result := self removeCustomer: aName fromInstanceVariable: active.
+	result = NotFound ifTrue: [^	self removeCustomer: aName fromInstanceVariable: suspended].
+	^result. 
+	
+	"1 to: active size do: 
 	[ :index |
 		aName = (active at: index)
 			ifTrue: [
@@ -243,7 +247,7 @@ removeCustomerNamed: aName
 			] 
 	].
 
-	1 to: suspended size do: 	
+	1 to: suspended size do: 
 	[ :index |
 		aName = (suspended at: index)
 			ifTrue: [
@@ -251,8 +255,8 @@ removeCustomerNamed: aName
 				^ aName 
 			] 
 	].
-	
-	^ NotFound signal.
+
+	^ NotFound signal."
 ! !
 
 !CustomerBook methodsFor: 'customer management' stamp: 'HernanWilkinson 7/6/2011 17:52'!
