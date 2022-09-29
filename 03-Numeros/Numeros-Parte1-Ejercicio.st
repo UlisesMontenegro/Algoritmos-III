@@ -107,10 +107,26 @@ test17SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 	self assert: oneHalf negated equals: (Numero with: one over: negativeTwo)! !
 
 
-!NumeroTest methodsFor: 'setup' stamp: 'NR 9/8/2019 21:09:34'!
+!NumeroTest methodsFor: 'setup' stamp: 'VDM 9/29/2022 17:40:08'!
 setUp
-
-	zero := Numero with: 0.
+	zero := Entero with: 0.
+	one := Entero with: 1.
+	two := Entero with: 2.
+	three:= Entero with: 3.
+	four := Entero with: 4.
+	five := Entero with: 5.
+	eight := Entero with: 8.
+	negativeOne := Entero with: -1.
+	negativeTwo := Entero with: -2.
+	
+	oneHalf := Fraccion with: one over: two.
+	oneFifth := Fraccion with: one over: five.
+	twoFifth := Fraccion with: two over: five.
+	twoTwentyfifth := Fraccion with: two over: (Entero with: 25).
+	fiveHalfs := Fraccion with: five over: two.
+	
+	
+	"zero := Numero with: 0.
 	one := Numero with: 1.
 	two := Numero with: 2.
 	three:= Numero with: 3.
@@ -124,7 +140,7 @@ setUp
 	oneFifth := Numero with: one over: five.
 	twoFifth := Numero with: two over: five.
 	twoTwentyfifth := Numero with: two over: (Numero with: 25).
-	fiveHalfs := Numero with: five over: two.
+	fiveHalfs := Numero with: five over: two."
 	! !
 
 
@@ -135,7 +151,7 @@ Object subclass: #Numero
 	poolDictionaries: ''
 	category: 'Numeros-Parte1-Ejercicio'!
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/9/2019 15:44:29'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
 * aMultiplier 
 
 	(type = #Entero and: [aMultiplier type = #Entero]) ifTrue:	
@@ -147,7 +163,7 @@ Object subclass: #Numero
 	self error: 'Tipo de número no soportado'
 	! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/9/2019 15:44:40'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
 + anAdder 
 	
 	(type = #Entero and: [anAdder type = #Entero]) ifTrue:
@@ -164,7 +180,7 @@ Object subclass: #Numero
 	self error: 'Tipo de número no soportado'
 	! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/8/2019 23:19:57'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
 negated
 	
 	type = #Entero ifTrue:
@@ -173,15 +189,17 @@ negated
 		[ ^self class with: numerator * (self class with: -1) over: denominator ].! !
 
 
-!Numero methodsFor: 'testing' stamp: 'NR 9/8/2019 22:00:09'!
+!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:28:21'!
 isNegative
+	self subclassResponsibility.
 	
+"	
 	type = #Entero ifTrue:
 		[ ^value < 0 ].
 	type = #Fraccion ifTrue:
-		[ ^denominator < 0 ].! !
+		[ ^denominator < 0 ]."! !
 
-!Numero methodsFor: 'testing' stamp: 'NR 9/8/2019 22:00:16'!
+!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:25:02'!
 isOne
 
 	type = #Entero ifTrue:
@@ -189,7 +207,7 @@ isOne
 	type = #Fraccion ifTrue:
 		[ ^false ].! !
 
-!Numero methodsFor: 'testing' stamp: 'NR 9/8/2019 22:00:23'!
+!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:25:02'!
 isZero
 
 	type = #Entero ifTrue:
@@ -198,13 +216,13 @@ isZero
 		[ ^false ].! !
 
 
-!Numero methodsFor: 'initialization' stamp: 'NR 9/8/2019 20:40:14'!
+!Numero methodsFor: 'initialization' stamp: 'VDM 9/29/2022 17:25:02'!
 initializeWith: aValue
 	
 	type := #Entero.
 	value := aValue! !
 
-!Numero methodsFor: 'initialization' stamp: 'NR 9/8/2019 20:40:23'!
+!Numero methodsFor: 'initialization' stamp: 'VDM 9/29/2022 17:24:37'!
 initializeWith: aNumerator over: aDenominator
 
 	"Estas precondiciones estan por si se comenten errores en la implementacion - Hernan"
@@ -239,7 +257,7 @@ type
 	^type! !
 
 
-!Numero methodsFor: 'printing' stamp: 'NR 9/8/2019 21:59:58'!
+!Numero methodsFor: 'printing' stamp: 'VDM 9/29/2022 17:25:02'!
 printOn: aStream
 	
 	type = #Entero ifTrue:
@@ -252,7 +270,7 @@ printOn: aStream
 			print: denominator ].! !
 
 
-!Numero methodsFor: 'comparing' stamp: 'NR 9/8/2019 21:50:26'!
+!Numero methodsFor: 'comparing' stamp: 'VDM 9/29/2022 17:25:02'!
 = anObject
 
 	^(anObject isKindOf: self class) and: [ type = anObject type and: 
@@ -260,7 +278,7 @@ printOn: aStream
 		ifFalse: [ type = #Fraccion ifTrue:
 			[ (numerator * anObject denominator) = (denominator * anObject numerator) ]]]]! !
 
-!Numero methodsFor: 'comparing' stamp: 'NR 9/8/2019 22:00:49'!
+!Numero methodsFor: 'comparing' stamp: 'VDM 9/29/2022 17:25:02'!
 hash
 	type = #Entero ifTrue:
 		[ ^value hash ].
@@ -268,7 +286,7 @@ hash
 		[ ^(numerator hash / denominator hash) hash ].! !
 
 
-!Numero methodsFor: 'arithmetic operations - private' stamp: 'NR 9/9/2019 16:21:07'!
+!Numero methodsFor: 'arithmetic operations - private' stamp: 'VDM 9/29/2022 17:25:02'!
 // aDivisor 
 	
 	type = #Entero ifTrue:
@@ -276,7 +294,7 @@ hash
 		
 	self error: 'Tipo de número no soportado'! !
 
-!Numero methodsFor: 'arithmetic operations - private' stamp: 'NR 9/9/2019 16:21:17'!
+!Numero methodsFor: 'arithmetic operations - private' stamp: 'VDM 9/29/2022 17:25:02'!
 greatestCommonDivisorWith: anEntero 
 	
 	type = #Entero ifTrue:
@@ -321,3 +339,27 @@ with: aDividend over: aDivisor
 	denominator isOne ifTrue: [ ^numerator ].
 
 	^self new initializeWith: numerator over: denominator! !
+
+
+!classDefinition: #Entero category: 'Numeros-Parte1-Ejercicio'!
+Numero subclass: #Entero
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros-Parte1-Ejercicio'!
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:23:07'!
+isNegative	
+	^ value < 0! !
+
+
+!classDefinition: #Fraccion category: 'Numeros-Parte1-Ejercicio'!
+Numero subclass: #Fraccion
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numeros-Parte1-Ejercicio'!
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:25:45'!
+isNegative
+	^ denominator < 0.! !
