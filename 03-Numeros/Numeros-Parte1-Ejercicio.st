@@ -35,7 +35,7 @@ test06EnteroMultipliesWithEnteroCorrectly
 
 	self assert: four equals: two * two! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'JS 5/1/2022 18:01:10'!
+!NumeroTest methodsFor: 'tests' stamp: 'VDM 9/29/2022 18:41:19'!
 test07FraccionAddsWithFraccionCorrectly
 "
     La suma de fracciones es:
@@ -47,7 +47,7 @@ test07FraccionAddsWithFraccionCorrectly
 "
 	| sevenTenths |
 
-	sevenTenths := Numero with: (Numero with: 7) over: (Numero with: 10).
+	sevenTenths := Fraccion with: (Entero with: 7) over: (Entero with: 10).
 
 	self assert: sevenTenths equals: oneFifth + oneHalf! !
 
@@ -61,10 +61,10 @@ test08FraccionMultipliesWithFraccionCorrectly
 
 	self assert: twoTwentyfifth equals: oneFifth * twoFifth! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'JS 5/1/2022 18:03:11'!
+!NumeroTest methodsFor: 'tests' stamp: 'VDM 9/29/2022 18:42:05'!
 test09AparentFraccionesAreEqual
 
-	self assert: oneHalf equals: (Numero with: two over: four)! !
+	self assert: oneHalf equals: (Fraccion with: two over: four)! !
 
 !NumeroTest methodsFor: 'tests' stamp: 'JS 5/1/2022 18:03:28'!
 test10AddingFraccionesCanReturnAnEntero
@@ -91,20 +91,20 @@ test14NegationOfEnteroIsCorrect
 
 	self assert: negativeTwo equals: two negated! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'JS 5/1/2022 18:05:06'!
+!NumeroTest methodsFor: 'tests' stamp: 'VDM 9/29/2022 18:43:05'!
 test15NegationOfFraccionIsCorrect
 
-	self assert: (Numero with: negativeOne over: two) equals: oneHalf negated! !
+	self assert: (Fraccion with: negativeOne over: two) equals: oneHalf negated! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'NR 9/8/2019 21:29:45'!
+!NumeroTest methodsFor: 'tests' stamp: 'VDM 9/29/2022 18:46:42'!
 test16SignIsCorrectlyAssignedToFractionWithTwoNegatives
 
-	self assert: oneHalf equals: (Numero with: negativeOne over: negativeTwo)! !
+	self assert: oneHalf equals: (Fraccion with: negativeOne over: negativeTwo)! !
 
-!NumeroTest methodsFor: 'tests' stamp: 'NR 9/8/2019 21:30:07'!
+!NumeroTest methodsFor: 'tests' stamp: 'VDM 9/29/2022 18:47:29'!
 test17SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 
-	self assert: oneHalf negated equals: (Numero with: one over: negativeTwo)! !
+	self assert: oneHalf negated equals: (Fraccion with: one over: negativeTwo)! !
 
 
 !NumeroTest methodsFor: 'setup' stamp: 'VDM 9/29/2022 17:40:08'!
@@ -151,20 +151,23 @@ Object subclass: #Numero
 	poolDictionaries: ''
 	category: 'Numeros-Parte1-Ejercicio'!
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 18:15:36'!
 * aMultiplier 
+	self subclassResponsibility.
 
-	(type = #Entero and: [aMultiplier type = #Entero]) ifTrue:	
-		[ ^self class with: value * aMultiplier integerValue ].
+	"(type = #Entero and: [aMultiplier type = #Entero]) ifTrue:	
+		[ ^self class with: value * aMultiplier integerValue ]."
 		
-	(type = #Fraccion and: [aMultiplier type = #Fraccion]) ifTrue:
+	"(type = #Fraccion and: [aMultiplier type = #Fraccion]) ifTrue:
 		[ ^self class with: (numerator * aMultiplier numerator) over: (denominator * aMultiplier denominator) ].
 		
 	self error: 'Tipo de número no soportado'
-	! !
+	"! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 18:27:49'!
 + anAdder 
+	self subclassResponsibility.
+"
 	
 	(type = #Entero and: [anAdder type = #Entero]) ifTrue:
 		[ ^self class with: value + anAdder integerValue ].
@@ -178,15 +181,18 @@ Object subclass: #Numero
 		^ self class with: newNumerator over: newDenominator ].
 	
 	self error: 'Tipo de número no soportado'
-	! !
+"	! !
 
-!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 17:25:02'!
-negated
+!Numero methodsFor: 'arithmetic operations' stamp: 'VDM 9/29/2022 18:39:26'!
+negated	
+	self subclassResponsibility.
+"
 	
 	type = #Entero ifTrue:
 		[ ^self * (self class with: -1) ].
 	type = #Fraccion ifTrue:
-		[ ^self class with: numerator * (self class with: -1) over: denominator ].! !
+		[ ^self class with: numerator * (self class with: -1) over: denominator ].
+		"! !
 
 
 !Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:28:21'!
@@ -199,21 +205,13 @@ isNegative
 	type = #Fraccion ifTrue:
 		[ ^denominator < 0 ]."! !
 
-!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:25:02'!
+!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:52:17'!
 isOne
+		self subclassResponsibility.! !
 
-	type = #Entero ifTrue:
-		[ ^value = 1 ].
-	type = #Fraccion ifTrue:
-		[ ^false ].! !
-
-!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:25:02'!
+!Numero methodsFor: 'testing' stamp: 'VDM 9/29/2022 17:52:23'!
 isZero
-
-	type = #Entero ifTrue:
-		[ ^value = 0 ].
-	type = #Fraccion ifTrue:
-		[ ^false ].! !
+		self subclassResponsibility.! !
 
 
 !Numero methodsFor: 'initialization' stamp: 'VDM 9/29/2022 17:25:02'!
@@ -348,9 +346,49 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'Numeros-Parte1-Ejercicio'!
 
-!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:23:07'!
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:09:41'!
+* aMultiplier 
+	
+	(aMultiplier class = Entero) ifTrue:[
+		^ self class with: value * aMultiplier integerValue.
+		].
+	
+	"(type = #Entero and: [aMultiplier type = #Entero]) ifTrue:	
+	[ ^self class with: value * aMultiplier integerValue ]."
+	
+	self error: 'Tipo de número no soportado'! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:24:52'!
++ anAdder 
+	
+	(anAdder class = Entero) ifTrue:[
+		^ self class with: value + anAdder integerValue. 
+		].
+	
+	self error: 'Tipo de número no soportado'
+	! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:52:33'!
 isNegative	
+	
 	^ value < 0! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:52:38'!
+isOne
+	
+	^ value = 1.
+! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:52:50'!
+isZero
+
+	^ value = 0.
+! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:38:20'!
+negated
+	
+	^self * (self class with: -1).! !
 
 
 !classDefinition: #Fraccion category: 'Numeros-Parte1-Ejercicio'!
@@ -360,6 +398,44 @@ Numero subclass: #Fraccion
 	poolDictionaries: ''
 	category: 'Numeros-Parte1-Ejercicio'!
 
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:25:45'!
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:15:55'!
+* aMultiplier 
+	
+	(aMultiplier class = Fraccion) ifTrue:[
+		^self class with: (numerator * aMultiplier numerator) over: (denominator * aMultiplier denominator).
+		].
+	self error: 'Tipo de número no soportado'! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:27:22'!
++ anAdder 
+	
+	(anAdder class = Fraccion) ifTrue:
+		[ | newNumerator newDenominator |
+		
+		newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
+		newDenominator := denominator * anAdder denominator.
+		
+		^ self class with: newNumerator over: newDenominator ].
+	
+	self error: 'Tipo de número no soportado'
+	! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:53:02'!
 isNegative
+	
 	^ denominator < 0.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:53:06'!
+isOne
+	
+	^ false.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 17:53:11'!
+isZero
+	
+	^ false.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:46:15'!
+negated
+	
+	^ self class with: numerator * (Entero with: -1) over: denominator.! !
