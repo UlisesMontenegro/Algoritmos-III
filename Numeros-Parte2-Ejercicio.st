@@ -406,6 +406,43 @@ isZero
 	self subclassResponsibility ! !
 
 
+!Numero methodsFor: 'private' stamp: 'HernanWilkinson 5/7/2016 22:48'!
+invalidNumberType
+
+	self error: self class invalidNumberTypeErrorDescription! !
+
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:32:18'!
+multiplicateSoyEntero: aMultiplier
+
+	self subclassResponsibility! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:31:25'!
+multiplicateSoyFraccion: aMultiplier
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:26:33'!
+restateSoyEntero: unEntero 
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:34:38'!
+restateSoyFraccion: aSubtrahend
+
+		self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:27:14'!
+sumateSoyEntero: anAdder
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:27:44'!
+sumateSoyFraccion: anAdder
+
+	self subclassResponsibility.
+! !
+
+
 !Numero methodsFor: 'initialization' stamp: 'VDM 9/29/2022 17:25:02'!
 initializeWith: aValue
 	
@@ -492,43 +529,6 @@ greatestCommonDivisorWith: anEntero
 		
 	self error: 'Tipo de número no soportado'! !
 
-
-!Numero methodsFor: 'private' stamp: 'HernanWilkinson 5/7/2016 22:48'!
-invalidNumberType
-
-	self error: self class invalidNumberTypeErrorDescription! !
-
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:32:18'!
-multiplicateSoyEntero: aMultiplier
-
-	self subclassResponsibility! !
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:31:25'!
-multiplicateSoyFraccion: aMultiplier
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:26:33'!
-restateSoyEntero: unEntero 
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:34:38'!
-restateSoyFraccion: aSubtrahend
-
-		self subclassResponsibility.! !
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:27:14'!
-sumateSoyEntero: anAdder
-
-	self subclassResponsibility.! !
-
-!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:27:44'!
-sumateSoyFraccion: anAdder
-
-	self subclassResponsibility.
-! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Numero class' category: 'Numeros-Parte2-Ejercicio'!
@@ -579,42 +579,6 @@ Numero subclass: #Entero
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:28'!
-multiplicateSoyEntero: aMultiplier
-
-	^Entero with: value * aMultiplier integerValue.! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:36:11'!
-multiplicateSoyFraccion: aMultiplier
-	
-	^Fraccion with: (self value * aMultiplier numerator) over: aMultiplier denominator! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:38:20'!
-negated
-	
-	^self * (self class with: -1).! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:22:32'!
-restateSoyEntero: unEntero 
-	^ Entero with: value - unEntero integerValue.! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:33:57'!
-restateSoyFraccion: aSubtrahend
-
-		^Fraccion with: ( aSubtrahend numerator - ( aSubtrahend denominator * self)) over:aSubtrahend denominator.! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:35'!
-sumateSoyEntero: anAdder
-
-	^Entero with: value + anAdder integerValue. ! !
-
-!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:53:43'!
-sumateSoyFraccion: anAdder
-
-	^Fraccion with: (anAdder numerator + (self * anAdder denominator)) over: anAdder denominator
-! !
-
-
 !Entero methodsFor: 'arithmetic operations' stamp: 'UM 10/3/2022 15:26:16'!
 * aMultiplier 
 	 
@@ -627,9 +591,9 @@ sumateSoyFraccion: anAdder
 	^anAdder sumateSoyEntero: self.
 ! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'VDM 10/3/2022 16:25:43'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'UM 10/3/2022 16:48:25'!
 - aSubtrahend 
-	aSubtrahend restateSoyEntero: self.! !
+	^aSubtrahend restateSoyEntero: self.! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'UM 9/29/2022 21:15:26'!
 / aDivisor 
@@ -638,7 +602,7 @@ sumateSoyFraccion: anAdder
 	
 	^Fraccion with: self over: aDivisor! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'HAW 9/24/2018 08:47:50'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'UM 10/3/2022 16:49:32'!
 fibonacci
 
 	| one two |
@@ -710,6 +674,42 @@ greatestCommonDivisorWith: anEntero
 	
 	^self class with: (value gcd: anEntero integerValue)! !
 
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:28'!
+multiplicateSoyEntero: aMultiplier
+
+	^Entero with: value * aMultiplier integerValue.! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:36:11'!
+multiplicateSoyFraccion: aMultiplier
+	
+	^Fraccion with: (self value * aMultiplier numerator) over: aMultiplier denominator! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:38:20'!
+negated
+	
+	^self * (self class with: -1).! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 16:48:45'!
+restateSoyEntero: unEntero 
+	^ Entero with: unEntero integerValue - value.! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:33:57'!
+restateSoyFraccion: aSubtrahend
+
+		^Fraccion with: ( aSubtrahend numerator - ( aSubtrahend denominator * self)) over:aSubtrahend denominator.! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:35'!
+sumateSoyEntero: anAdder
+
+	^Entero with: value + anAdder integerValue. ! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:53:43'!
+sumateSoyFraccion: anAdder
+
+	^Fraccion with: (anAdder numerator + (self * anAdder denominator)) over: anAdder denominator
+! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Entero class' category: 'Numeros-Parte2-Ejercicio'!
@@ -735,54 +735,6 @@ Numero subclass: #Fraccion
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:41'!
-multiplicateSoyEntero: aMultiplier
-
-	^Fraccion with: (numerator * aMultiplier) over: denominator.! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:28:56'!
-multiplicateSoyFraccion: aMultiplier
-
-	^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:46:15'!
-negated
-	
-	^ self class with: numerator * (Entero with: -1) over: denominator.! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:25:02'!
-restateSoyEntero: unEntero 
-	
-	^Fraccion with: ((unEntero * self denominator) - self numerator) over: self denominator.
-	! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:30:35'!
-restateSoyFraccion: aSubtrahend
-
-	| newNumerator newDenominator |
-	
-	newNumerator := (numerator * aSubtrahend denominator) - (denominator * aSubtrahend numerator).
-	newDenominator := denominator * aSubtrahend denominator.
-	
-	^newNumerator / newDenominator 
-! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:53:08'!
-sumateSoyEntero: anAdder
-
-        ^Fraccion with: ((anAdder * denominator)+ numerator) over:  denominator.! !
-
-!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:39:11'!
-sumateSoyFraccion: anAdder
-
-	| newNumerator newDenominator |
-	
-	newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
-	newDenominator := denominator * anAdder denominator.
-	
-	^newNumerator / newDenominator! !
-
 
 !Fraccion methodsFor: 'arithmetic operations' stamp: 'UM 10/3/2022 15:30:33'!
 * aMultiplier 
@@ -872,6 +824,54 @@ printOn: aStream
 		print: numerator;
 		nextPut: $/;
 		print: denominator ! !
+
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:41'!
+multiplicateSoyEntero: aMultiplier
+
+	^Fraccion with: (numerator * aMultiplier) over: denominator.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:28:56'!
+multiplicateSoyFraccion: aMultiplier
+
+	^(numerator * aMultiplier numerator) / (denominator * aMultiplier denominator)! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 9/29/2022 18:46:15'!
+negated
+	
+	^ self class with: numerator * (Entero with: -1) over: denominator.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 16:25:02'!
+restateSoyEntero: unEntero 
+	
+	^Fraccion with: ((unEntero * self denominator) - self numerator) over: self denominator.
+	! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 16:49:15'!
+restateSoyFraccion: aSubtrahend
+
+	| newNumerator newDenominator |
+	
+	newNumerator := (denominator * aSubtrahend numerator) - (numerator * aSubtrahend denominator).
+	newDenominator := denominator * aSubtrahend denominator.
+	
+	^newNumerator / newDenominator 
+! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:53:08'!
+sumateSoyEntero: anAdder
+
+        ^Fraccion with: ((anAdder * denominator)+ numerator) over:  denominator.! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:39:11'!
+sumateSoyFraccion: anAdder
+
+	| newNumerator newDenominator |
+	
+	newNumerator := (numerator * anAdder denominator) + (denominator * anAdder numerator).
+	newDenominator := denominator * anAdder denominator.
+	
+	^newNumerator / newDenominator! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
