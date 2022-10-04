@@ -412,6 +412,16 @@ invalidNumberType
 	self error: self class invalidNumberTypeErrorDescription! !
 
 
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 17:07:04'!
+dividimeSoyEntero: aDivisor
+
+	self subclassResponsibility.! !
+
+!Numero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 17:06:57'!
+dividimeSoyFraccion: aDivisor
+
+	self subclassResponsibility.! !
+
 !Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:32:18'!
 multiplicateSoyEntero: aMultiplier
 
@@ -595,12 +605,9 @@ Numero subclass: #Entero
 - aSubtrahend 
 	^aSubtrahend restateSoyEntero: self.! !
 
-!Entero methodsFor: 'arithmetic operations' stamp: 'UM 9/29/2022 21:15:26'!
+!Entero methodsFor: 'arithmetic operations' stamp: 'VDM 10/3/2022 17:02:15'!
 / aDivisor 
-		(aDivisor isKindOf: Fraccion) ifTrue: [
-		^Fraccion with: self value * aDivisor denominator over: aDivisor numerator].
-	
-	^Fraccion with: self over: aDivisor! !
+	^aDivisor dividimeSoyEntero: self.! !
 
 !Entero methodsFor: 'arithmetic operations' stamp: 'UM 10/3/2022 16:49:32'!
 fibonacci
@@ -674,6 +681,24 @@ greatestCommonDivisorWith: anEntero
 	
 	^self class with: (value gcd: anEntero integerValue)! !
 
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 21:08:37'!
+dividimeSoyEntero: unEntero
+
+	^Fraccion with: unEntero over: self.
+	"^Fraccion with: self value over: unEntero integerValue."
+! !
+
+!Entero methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 21:39:03'!
+dividimeSoyFraccion: unaFraccion
+	
+	| nuevoDenominador nuevoNumerador |
+	nuevoNumerador := unaFraccion numerator.
+	nuevoDenominador := unaFraccion denominator * self.
+	^Fraccion with: nuevoNumerador over: nuevoDenominador.
+	"^Fraccion with: unaFraccion numerator over: unaFraccion denominator * self integerValue."
+
+! !
 
 !Entero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:28'!
 multiplicateSoyEntero: aMultiplier
@@ -760,12 +785,9 @@ Numero subclass: #Fraccion
 	^newNumerator / newDenominator 
 "! !
 
-!Fraccion methodsFor: 'arithmetic operations' stamp: 'UM 9/29/2022 21:17:48'!
+!Fraccion methodsFor: 'arithmetic operations' stamp: 'VDM 10/3/2022 17:03:15'!
 / aDivisor 
-		(aDivisor isKindOf: Entero) ifTrue: [
-		^self class with: numerator over: denominator * aDivisor].
-	
-	^(numerator * aDivisor denominator) / (denominator * aDivisor numerator)! !
+	^aDivisor dividimeSoyFraccion: self.! !
 
 
 !Fraccion methodsFor: 'comparing' stamp: 'HernanWilkinson 5/7/2016 20:42'!
@@ -825,6 +847,21 @@ printOn: aStream
 		nextPut: $/;
 		print: denominator ! !
 
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 21:35:02'!
+dividimeSoyEntero: unEntero
+
+	| nuevoDenominador nuevoNumerador |
+	nuevoNumerador := (Entero with: unEntero integerValue ) * self denominator.
+	nuevoDenominador := self numerator.
+	^ Fraccion with: nuevoNumerador over: nuevoDenominador.
+	"^Fraccion with: self over: aDivisor."! !
+
+!Fraccion methodsFor: 'as yet unclassified' stamp: 'VDM 10/3/2022 21:15:51'!
+dividimeSoyFraccion: unaFraccion
+
+	^ (unaFraccion numerator * self denominator) / (unaFraccion denominator * self numerator).
+	"^(numerator * unaFraccion denominator) / (denominator * unaFraccion numerator)"! !
 
 !Fraccion methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 15:35:41'!
 multiplicateSoyEntero: aMultiplier
