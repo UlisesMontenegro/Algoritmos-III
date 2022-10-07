@@ -499,43 +499,43 @@ invalidNumberType
 	self error: self class invalidNumberTypeErrorDescription! !
 
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:49:43'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:49:43'!
 addAFraccion: anAdder
 
 	self subclassResponsibility.
 ! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:47:18'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:47:18'!
 addAnEntero: anAdder
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:47:52'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:47:52'!
 divideByEntero: aDivisor
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:50:50'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:50:50'!
 divideByFraccion: aDivisor
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:45:53'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:45:53'!
 multiplyByEntero: aMultiplier
 
 	self subclassResponsibility! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:49:26'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:49:26'!
 multiplyByFraccion: aMultiplier
 
 	self subclassResponsibility.! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:50:12'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:50:12'!
 subtractAFraccion: aSubtrahend
 
 		self subclassResponsibility.! !
 
-!Numero methodsFor: 'as yet unclassified' stamp: 'UM 10/3/2022 22:47:37'!
+!Numero methodsFor: 'private operations' stamp: 'UM 10/3/2022 22:47:37'!
 subtractAnEntero: unEntero 
 	self subclassResponsibility.! !
 
@@ -752,7 +752,7 @@ Entero class
 negativeFibonacciErrorDescription
 	^ ' Fibonacci no está definido aquí para Enteros Negativos'! !
 
-!Entero class methodsFor: 'instance creation' stamp: 'VDM 10/4/2022 14:53:38'!
+!Entero class methodsFor: 'instance creation' stamp: 'UM 10/4/2022 18:37:41'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
@@ -804,7 +804,7 @@ Entero subclass: #Uno
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Uno methodsFor: 'inicializacion' stamp: 'VDM 10/4/2022 14:52:41'!
+!Uno methodsFor: 'initialization' stamp: 'VDM 10/4/2022 14:52:41'!
 initialize
 	value := 1.! !
 
@@ -823,7 +823,7 @@ Entero subclass: #Zero
 	poolDictionaries: ''
 	category: 'Numeros-Parte2-Ejercicio'!
 
-!Zero methodsFor: 'inicializacion' stamp: 'VDM 10/4/2022 14:28:20'!
+!Zero methodsFor: 'initialization' stamp: 'VDM 10/4/2022 14:28:20'!
 initialize
 	value := 0.! !
 
