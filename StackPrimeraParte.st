@@ -98,6 +98,18 @@ test06esPosibleObtenerElUltimoElementoSinRetirarloDelStack
 	self assert: segundoElemento equals: ultimoElemento.
 	self assert: segundoElemento equals: elementoRetirado.! !
 
+!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/8/2022 10:39:53'!
+test07intentarHacerPopEnStackVacioLanzaError
+
+	| stack |
+	
+	stack := Stack new.
+	
+	self should: [stack pop] 
+		raise: Error
+		withExceptionDo:[:unError | self assert: Stack elStackEstaVacioErrorDescription equals: unError messageText].
+		"self shouldFail: stack pop."! !
+
 
 !classDefinition: #Stack category: 'StackPrimeraParte'!
 Object subclass: #Stack
@@ -118,20 +130,20 @@ isEmpty
 	
 	^self stackEstaVacio.! !
 
-!Stack methodsFor: 'accessing' stamp: 'VDM 10/7/2022 22:42:12'!
+!Stack methodsFor: 'accessing' stamp: 'VDM 10/8/2022 10:40:15'!
 top
 	
-	self isEmpty ifTrue: [^nil.].
+	self isEmpty ifTrue: [self error: Stack elStackEstaVacioErrorDescription.].
 	^ self obtenerUltimoElemento.
 	! !
 
 
-!Stack methodsFor: 'removing' stamp: 'VDM 10/7/2022 22:43:57'!
+!Stack methodsFor: 'removing' stamp: 'VDM 10/8/2022 10:45:49'!
 pop
 	
 	| ultimo |
 	ultimo := self top.
-	ultimo isNil ifFalse: [self removerElemento].
+	self removerElemento.
 	^ultimo.! !
 
 
@@ -160,3 +172,13 @@ stackEstaVacio
 push: unElementoASerAgregado 
 	
 	self agregarUnElemento: unElementoASerAgregado.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Stack class' category: 'StackPrimeraParte'!
+Stack class
+	instanceVariableNames: ''!
+
+!Stack class methodsFor: 'error descriptions' stamp: 'VDM 10/8/2022 10:28:51'!
+elStackEstaVacioErrorDescription
+	^'No hay elementos en el stack.'! !
