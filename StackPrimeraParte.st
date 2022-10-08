@@ -76,10 +76,10 @@ test05ultimoElementoAgregadoEsElPrimeroEnSerRetirado
 	
 	self assert: segundoElemento equals: ultimoElemento.! !
 
-!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/7/2022 22:33:02'!
+!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/8/2022 16:15:26'!
 test06esPosibleObtenerElUltimoElementoSinRetirarloDelStack
 
-	| stack primerElemento ultimoElemento segundoElemento elementoRetirado |
+	| stack primerElemento segundoElemento |
 	
 	stack := Stack new.
 	
@@ -91,12 +91,8 @@ test06esPosibleObtenerElUltimoElementoSinRetirarloDelStack
 	
 	stack push: segundoElemento.
 	
-	ultimoElemento := stack top.
-	
-	elementoRetirado := stack pop.
-	
-	self assert: segundoElemento equals: ultimoElemento.
-	self assert: segundoElemento equals: elementoRetirado.! !
+	self assert: stack top doesNotChange: stack top.
+	! !
 
 !StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/8/2022 10:39:53'!
 test07intentarHacerPopEnStackVacioLanzaError
