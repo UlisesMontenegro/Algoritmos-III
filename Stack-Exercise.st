@@ -332,8 +332,10 @@ add: unElementoASerAgregado
 
 	elementosAlmacenados add: unElementoASerAgregado.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified'!
+!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 13:00:24'!
 inicializarCon: unaColeccionOrdenada
+
+	elementosAlmacenados := unaColeccionOrdenada.
 
 	! !
 
@@ -405,6 +407,11 @@ add: unElementoASerIngresado
 	
 	^self.! !
 
+!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 13:01:07'!
+inicializarCon: unaColeccionOrdenada
+
+	elementosAlmacenados := unaColeccionOrdenada.! !
+
 !ContenedorVacio methodsFor: 'as yet unclassified'!
 isEmpty
 	
@@ -456,47 +463,6 @@ puedeInstanciarseCon: unaColeccionOrdenada
 	^ unaColeccionOrdenada isEmpty.! !
 
 
-!classDefinition: #Master category: 'Stack-Exercise'!
-Object subclass: #Master
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
-
-!Master methodsFor: 'as yet unclassified'!
-dameTuUltimoElemento
-
-	self subclassResponsibility.! !
-
-
-!classDefinition: #AAA category: 'Stack-Exercise'!
-Master subclass: #AAA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
-
-!AAA methodsFor: 'as yet unclassified'!
-dameTuUltimoElemento
-	^ self error: OOStack stackEmptyErrorDescription.! !
-
-
-!classDefinition: #BBB category: 'Stack-Exercise'!
-Master subclass: #BBB
-	instanceVariableNames: 'elementosAlmacenados'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Stack-Exercise'!
-
-!BBB methodsFor: 'as yet unclassified'!
-dameTuUltimoElemento
-	^ self obtenerUltimoElemento.! !
-
-!BBB methodsFor: 'as yet unclassified'!
-obtenerUltimoElemento
-	^ elementosAlmacenados last.! !
-
-
 !classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
 	instanceVariableNames: 'elementosAlmacenados'
@@ -504,10 +470,10 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'inicializacion'!
+!OOStack methodsFor: 'inicializacion' stamp: 'VDM 10/14/2022 13:04:11'!
 initialize
 	
-	elementosAlmacenados := ContenedorVacio new.! !
+	elementosAlmacenados := OrderedCollection new.! !
 
 
 !OOStack methodsFor: 'acceso'!
@@ -520,13 +486,19 @@ size
 	
 	^self cantidadDeElementosAlmacenados.! !
 
-!OOStack methodsFor: 'acceso'!
+!OOStack methodsFor: 'acceso' stamp: 'VDM 10/14/2022 13:02:27'!
 top
 	
-	"^elementosAlmacenados obtenerUltimoElemento."	|coleccionAuxiliar|
+	"^elementosAlmacenados obtenerUltimoElemento."	
+	| administradorDeStack |
+	
+	administradorDeStack := Contenedor con: elementosAlmacenados.
+	^administradorDeStack obtenerUltimoElemento
+	
+	"|coleccionAuxiliar|
 	
 	coleccionAuxiliar := Contenedor con: elementosAlmacenados.
-	^coleccionAuxiliar dameTuUltimoElemento.
+	^coleccionAuxiliar dameTuUltimoElemento."
 
 	"self isEmpty ifTrue: [^ self error: OOStack stackEmptyErrorDescription.]
 	ifFalse: [^ self obtenerUltimoElemento]."! !
