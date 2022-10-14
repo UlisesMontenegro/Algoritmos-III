@@ -5,7 +5,7 @@ TestCase subclass: #ContenedorTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:30:30'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test01unContenedorConDatosInicializaSinElementosAlmacenados
 
 	| contenedorConDatos |
@@ -15,7 +15,7 @@ test01unContenedorConDatosInicializaSinElementosAlmacenados
 	self assert: contenedorConDatos isEmpty.
 	self assert: contenedorConDatos size equals: 0.! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:36:59'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test02unContenedorSinDatosInicializaVacio
 
 	| contenedorVacio |
@@ -25,7 +25,7 @@ test02unContenedorSinDatosInicializaVacio
 	self assert: contenedorVacio isEmpty.
 	self assert: contenedorVacio size equals: 0.! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:40:21'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test03unContenedorSinDatosSiemprEstaVacio
 
 	| contenedorVacio |
@@ -45,7 +45,7 @@ test03unContenedorSinDatosSiemprEstaVacio
 	self assert: contenedorVacio size equals: 0.
 ! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:49:54'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test04sePuedenAgregarElementosAUnContenedorConDatos
 
 	| contenedorConDatos |
@@ -65,7 +65,7 @@ test04sePuedenAgregarElementosAUnContenedorConDatos
 	self assert: contenedorConDatos size equals: 4.
 ! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:07:37'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test05intentarRemoverElementoDeUnContenedorVacioLanzaUnError
 
 	| contenedorVacio |
@@ -79,7 +79,7 @@ test05intentarRemoverElementoDeUnContenedorVacioLanzaUnError
 			].
 		! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:15:22'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test06sePuedenEliminarElementosDeUnContenedorConDatos
 
 	| contenedorConDatos |
@@ -91,7 +91,7 @@ test06sePuedenEliminarElementosDeUnContenedorConDatos
 	
 	self assert: contenedorConDatos isEmpty.! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:19:04'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test07intentarPedirUltimoElementoDeUnContenedorVacioLanzaUnError
 
 	| contenedorVacio |
@@ -105,7 +105,7 @@ test07intentarPedirUltimoElementoDeUnContenedorVacioLanzaUnError
 			].
 		! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:26:30'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test08LastDevuelveUltimoElementosDeUnContenedorConDatos
 
 	| contenedorConDatos objetoAgregado |
@@ -117,7 +117,7 @@ test08LastDevuelveUltimoElementosDeUnContenedorConDatos
 		
 	self assert: objetoAgregado equals: contenedorConDatos last.! !
 
-!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:18:08'!
+!ContenedorTest methodsFor: 'as yet unclassified'!
 test09ContenedorConDatosSeComportaComoLIFO
 
 	| segundoElementoAgregado primerElementoAgregado contenedorConDatos |
@@ -145,7 +145,7 @@ TestCase subclass: #OOStackTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 18:00:02'!
+!OOStackTest methodsFor: 'test'!
 test01StackShouldBeEmptyWhenCreated
 
 	| stack |
@@ -153,7 +153,7 @@ test01StackShouldBeEmptyWhenCreated
 	
 	self assert: stack isEmpty! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:59:57'!
+!OOStackTest methodsFor: 'test'!
 test02PushAddElementsToTheStack
 
 	| stack |
@@ -163,7 +163,7 @@ test02PushAddElementsToTheStack
 	
 	self deny: stack isEmpty! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:59:50'!
+!OOStackTest methodsFor: 'test'!
 test03PopRemovesElementsFromTheStack
 
 	| stack |
@@ -174,7 +174,7 @@ test03PopRemovesElementsFromTheStack
 	
 	self assert: stack isEmpty! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:59:43'!
+!OOStackTest methodsFor: 'test'!
 test04PopReturnsLastPushedObject
 
 	| stack pushedObject |
@@ -185,7 +185,7 @@ test04PopReturnsLastPushedObject
 	
 	self assert: pushedObject equals: stack pop! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:56:59'!
+!OOStackTest methodsFor: 'test'!
 test05StackBehavesLIFO
 
 	| stack firstPushedObject secondPushedObject |
@@ -202,7 +202,7 @@ test05StackBehavesLIFO
 	self assert: stack isEmpty 
 	! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 18:00:26'!
+!OOStackTest methodsFor: 'test'!
 test06TopReturnsLastPushedObject
 
 	| stack pushedObject |
@@ -214,7 +214,7 @@ test06TopReturnsLastPushedObject
 	self assert: pushedObject equals: stack top.
 	! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:58:27'!
+!OOStackTest methodsFor: 'test'!
 test07TopDoesNotRemoveObjectFromStack
 
 	| stack pushedObject |
@@ -229,7 +229,7 @@ test07TopDoesNotRemoveObjectFromStack
 	self assert: 1 equals: stack size.
 	! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:58:44'!
+!OOStackTest methodsFor: 'test'!
 test08CanNotPopWhenThereAreNoObjectsInTheStack
 
 	| stack  |
@@ -243,7 +243,7 @@ test08CanNotPopWhenThereAreNoObjectsInTheStack
 		
 ! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:58:56'!
+!OOStackTest methodsFor: 'test'!
 test09CanNotPopWhenThereAreNoObjectsInTheStackAndTheStackHadObjects
 
 	| stack  |
@@ -260,7 +260,7 @@ test09CanNotPopWhenThereAreNoObjectsInTheStackAndTheStackHadObjects
 		
 ! !
 
-!OOStackTest methodsFor: 'test' stamp: 'JMB 10/8/2022 17:59:07'!
+!OOStackTest methodsFor: 'test'!
 test10CanNotTopWhenThereAreNoObjectsInTheStack
 
 	| stack  |
@@ -290,12 +290,12 @@ Object subclass: #Contenedor
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!Contenedor methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:26:08'!
+!Contenedor methodsFor: 'as yet unclassified'!
 isEmpty
 	
 	self subclassResponsibility.! !
 
-!Contenedor methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:35:03'!
+!Contenedor methodsFor: 'as yet unclassified'!
 size
 
 	self subclassResponsibility.! !
@@ -306,7 +306,15 @@ size
 Contenedor class
 	instanceVariableNames: ''!
 
-!Contenedor class methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:03:22'!
+!Contenedor class methodsFor: 'as yet unclassified'!
+con: unaColeccionOrdenada
+
+	Contenedor subclasses
+		detect: [:unaSubclase | unaSubclase puedeInstanciarseCon: unaColeccionOrdenada]
+		ifFound: [:subclaseSeleccionada | ^subclaseSeleccionada new inicializarCon: unaColeccionOrdenada]
+		ifNone: [self error: 'unaColeccionOrdenada debe ser una OrderedCollection'].! !
+
+!Contenedor class methodsFor: 'as yet unclassified'!
 contenedorVacioErrorDescription
 	
 	^ 'Stack is empty'! !
@@ -319,52 +327,70 @@ Contenedor subclass: #ContenedorConDatos
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:50:35'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 add: unElementoASerAgregado
 
 	elementosAlmacenados add: unElementoASerAgregado.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:15:30'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
+inicializarCon: unaColeccionOrdenada
+
+	! !
+
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 initialize
 
 	elementosAlmacenados := OrderedCollection new.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:25:53'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 isEmpty
 	
 	^elementosAlmacenados isEmpty.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:27:01'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 last
 	
 	^elementosAlmacenados last.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:33:45'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 obtenerUltimoElemento
 
 	^ self last.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:15:52'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 removeLast
 	
 	elementosAlmacenados removeLast.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:32:08'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 size
 	
 	^elementosAlmacenados size.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:29:05'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 teQuiteUnElemento
 
 	(self isEmpty) ifTrue: [^ContenedorVacio new].
 	
 	^self.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:23:07'!
+!ContenedorConDatos methodsFor: 'as yet unclassified'!
 voyAAgregarUnElemento
 	
 	^self.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ContenedorConDatos class' category: 'Stack-Exercise'!
+ContenedorConDatos class
+	instanceVariableNames: ''!
+
+!ContenedorConDatos class methodsFor: 'as yet unclassified'!
+puedeInstanciarseCon: unaColeccionOrdenada
+
+	^unaColeccionOrdenada isEmpty not.
+
+	! !
 
 
 !classDefinition: #ContenedorVacio category: 'Stack-Exercise'!
@@ -374,17 +400,17 @@ Contenedor subclass: #ContenedorVacio
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:43:19'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 add: unElementoASerIngresado
 	
 	^self.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:28:20'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 isEmpty
 	
 	^true.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:20:23'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 last
 
 	^self obtenerUltimoElemento.
@@ -393,30 +419,82 @@ last
 	
 	! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 07:49:02'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 obtenerUltimoElemento
 	
 	^ self error: OOStack stackEmptyErrorDescription.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:10:21'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 removeLast
 	
 	^ self error: Contenedor contenedorVacioErrorDescription.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:32:25'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 size
 	
 	^0.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:27:09'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 teQuiteUnElemento
 
 	^self.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:22:47'!
+!ContenedorVacio methodsFor: 'as yet unclassified'!
 voyAAgregarUnElemento
 	
 	^ContenedorConDatos new.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ContenedorVacio class' category: 'Stack-Exercise'!
+ContenedorVacio class
+	instanceVariableNames: ''!
+
+!ContenedorVacio class methodsFor: 'as yet unclassified'!
+puedeInstanciarseCon: unaColeccionOrdenada
+
+	^ unaColeccionOrdenada isEmpty.! !
+
+
+!classDefinition: #Master category: 'Stack-Exercise'!
+Object subclass: #Master
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!Master methodsFor: 'as yet unclassified'!
+dameTuUltimoElemento
+
+	self subclassResponsibility.! !
+
+
+!classDefinition: #AAA category: 'Stack-Exercise'!
+Master subclass: #AAA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!AAA methodsFor: 'as yet unclassified'!
+dameTuUltimoElemento
+	^ self error: OOStack stackEmptyErrorDescription.! !
+
+
+!classDefinition: #BBB category: 'Stack-Exercise'!
+Master subclass: #BBB
+	instanceVariableNames: 'elementosAlmacenados'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Stack-Exercise'!
+
+!BBB methodsFor: 'as yet unclassified'!
+dameTuUltimoElemento
+	^ self obtenerUltimoElemento.! !
+
+!BBB methodsFor: 'as yet unclassified'!
+obtenerUltimoElemento
+	^ elementosAlmacenados last.! !
 
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
@@ -426,31 +504,35 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'inicializacion' stamp: 'VDM 10/14/2022 10:30:29'!
+!OOStack methodsFor: 'inicializacion'!
 initialize
 	
 	elementosAlmacenados := ContenedorVacio new.! !
 
 
-!OOStack methodsFor: 'acceso' stamp: 'VDM 10/11/2022 09:11:47'!
+!OOStack methodsFor: 'acceso'!
 isEmpty
 	
 	^self stackEstaVacio.! !
 
-!OOStack methodsFor: 'acceso' stamp: 'VDM 10/11/2022 09:20:42'!
+!OOStack methodsFor: 'acceso'!
 size
 	
 	^self cantidadDeElementosAlmacenados.! !
 
-!OOStack methodsFor: 'acceso' stamp: 'VDM 10/14/2022 10:31:03'!
+!OOStack methodsFor: 'acceso'!
 top
 	
-	^elementosAlmacenados obtenerUltimoElemento.
-	"self isEmpty ifTrue: [^ self error: OOStack stackEmptyErrorDescription.].
-	^ self obtenerUltimoElemento."! !
+	"^elementosAlmacenados obtenerUltimoElemento."	|coleccionAuxiliar|
+	
+	coleccionAuxiliar := Contenedor con: elementosAlmacenados.
+	^coleccionAuxiliar dameTuUltimoElemento.
+
+	"self isEmpty ifTrue: [^ self error: OOStack stackEmptyErrorDescription.]
+	ifFalse: [^ self obtenerUltimoElemento]."! !
 
 
-!OOStack methodsFor: 'borrado' stamp: 'VDM 10/11/2022 09:12:58'!
+!OOStack methodsFor: 'borrado'!
 pop
 	
 	| ultimo |
@@ -459,36 +541,36 @@ pop
 	^ultimo.! !
 
 
-!OOStack methodsFor: 'agregado' stamp: 'VDM 10/11/2022 09:13:18'!
+!OOStack methodsFor: 'agregado'!
 push: unElementoASerAgregado 
 	
 	self agregarUnElemento: unElementoASerAgregado.! !
 
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/14/2022 10:31:39'!
+!OOStack methodsFor: 'acceso - privado'!
 agregarUnElemento: unElementoASerAgregado 
 	
-	elementosAlmacenados := elementosAlmacenados voyAAgregarUnElemento.
+	"elementosAlmacenados := elementosAlmacenados voyAAgregarUnElemento."
 	elementosAlmacenados add: unElementoASerAgregado.! !
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:20:09'!
+!OOStack methodsFor: 'acceso - privado'!
 cantidadDeElementosAlmacenados
 	
 	^elementosAlmacenados size.! !
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:26:00'!
+!OOStack methodsFor: 'acceso - privado'!
 obtenerUltimoElemento
 
 	^elementosAlmacenados last! !
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/14/2022 10:31:54'!
+!OOStack methodsFor: 'acceso - privado'!
 removerElemento
 
 	elementosAlmacenados removeLast.
 	
-	elementosAlmacenados := elementosAlmacenados teQuiteUnElemento.! !
+	"elementosAlmacenados := elementosAlmacenados teQuiteUnElemento."! !
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:11:39'!
+!OOStack methodsFor: 'acceso - privado'!
 stackEstaVacio
 	
 	^elementosAlmacenados isEmpty.! !
@@ -499,7 +581,7 @@ stackEstaVacio
 OOStack class
 	instanceVariableNames: ''!
 
-!OOStack class methodsFor: 'error descriptions' stamp: 'HernanWilkinson 5/7/2012 11:51'!
+!OOStack class methodsFor: 'error descriptions'!
 stackEmptyErrorDescription
 	
 	^ 'Stack is empty'! !
