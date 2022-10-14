@@ -117,6 +117,26 @@ test08LastDevuelveUltimoElementosDeUnContenedorConDatos
 		
 	self assert: objetoAgregado equals: contenedorConDatos last.! !
 
+!ContenedorTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:18:08'!
+test09ContenedorConDatosSeComportaComoLIFO
+
+	| segundoElementoAgregado primerElementoAgregado contenedorConDatos |
+	
+	contenedorConDatos := ContenedorConDatos new.
+	
+	primerElementoAgregado := 'Uno'.
+	segundoElementoAgregado := 'Dos'.
+	
+	contenedorConDatos add: primerElementoAgregado.
+	contenedorConDatos add: segundoElementoAgregado.
+		
+	self assert: segundoElementoAgregado equals: contenedorConDatos last.
+	contenedorConDatos removeLast.
+	self assert: primerElementoAgregado equals: contenedorConDatos last.
+	contenedorConDatos removeLast.
+	self assert: contenedorConDatos isEmpty.
+	! !
+
 
 !classDefinition: #OOStackTest category: 'Stack-Exercise'!
 TestCase subclass: #OOStackTest
@@ -319,10 +339,10 @@ last
 	
 	^elementosAlmacenados last.! !
 
-!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 08:18:39'!
+!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:33:45'!
 obtenerUltimoElemento
 
-	^ self elementoRecientementeGuardado.! !
+	^ self last.! !
 
 !ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 09:15:52'!
 removeLast
@@ -333,6 +353,18 @@ removeLast
 size
 	
 	^elementosAlmacenados size.! !
+
+!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:29:05'!
+teQuiteUnElemento
+
+	(self isEmpty) ifTrue: [^ContenedorVacio new].
+	
+	^self.! !
+
+!ContenedorConDatos methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:23:07'!
+voyAAgregarUnElemento
+	
+	^self.! !
 
 
 !classDefinition: #ContenedorVacio category: 'Stack-Exercise'!
@@ -376,6 +408,16 @@ size
 	
 	^0.! !
 
+!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:27:09'!
+teQuiteUnElemento
+
+	^self.! !
+
+!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 10:22:47'!
+voyAAgregarUnElemento
+	
+	^ContenedorConDatos new.! !
+
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
@@ -384,10 +426,10 @@ Object subclass: #OOStack
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!OOStack methodsFor: 'inicializacion' stamp: 'VDM 10/11/2022 09:11:20'!
+!OOStack methodsFor: 'inicializacion' stamp: 'VDM 10/14/2022 10:30:29'!
 initialize
 	
-	elementosAlmacenados := OrderedCollection new.! !
+	elementosAlmacenados := ContenedorVacio new.! !
 
 
 !OOStack methodsFor: 'acceso' stamp: 'VDM 10/11/2022 09:11:47'!
@@ -400,12 +442,12 @@ size
 	
 	^self cantidadDeElementosAlmacenados.! !
 
-!OOStack methodsFor: 'acceso' stamp: 'VDM 10/14/2022 08:08:41'!
+!OOStack methodsFor: 'acceso' stamp: 'VDM 10/14/2022 10:31:03'!
 top
 	
-	"^(ObjetoConDatos new) obtenerUltimoElemento."
-	self isEmpty ifTrue: [^ self error: OOStack stackEmptyErrorDescription.].
-	^ self obtenerUltimoElemento.! !
+	^elementosAlmacenados obtenerUltimoElemento.
+	"self isEmpty ifTrue: [^ self error: OOStack stackEmptyErrorDescription.].
+	^ self obtenerUltimoElemento."! !
 
 
 !OOStack methodsFor: 'borrado' stamp: 'VDM 10/11/2022 09:12:58'!
@@ -423,9 +465,10 @@ push: unElementoASerAgregado
 	self agregarUnElemento: unElementoASerAgregado.! !
 
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:11:10'!
+!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/14/2022 10:31:39'!
 agregarUnElemento: unElementoASerAgregado 
 	
+	elementosAlmacenados := elementosAlmacenados voyAAgregarUnElemento.
 	elementosAlmacenados add: unElementoASerAgregado.! !
 
 !OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:20:09'!
@@ -438,10 +481,12 @@ obtenerUltimoElemento
 
 	^elementosAlmacenados last! !
 
-!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:13:27'!
+!OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/14/2022 10:31:54'!
 removerElemento
 
-	elementosAlmacenados removeLast.! !
+	elementosAlmacenados removeLast.
+	
+	elementosAlmacenados := elementosAlmacenados teQuiteUnElemento.! !
 
 !OOStack methodsFor: 'acceso - privado' stamp: 'VDM 10/11/2022 09:11:39'!
 stackEstaVacio
