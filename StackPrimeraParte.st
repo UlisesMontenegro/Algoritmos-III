@@ -14,7 +14,7 @@ test01StackShouldBeEmptyWhenCreated
 	
 	self assert: stack isEmpty! !
 
-!StackTest methodsFor: 'as yet unclassified' stamp: 'UM 10/8/2022 18:38:03'!
+!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/6/2022 21:32:45'!
 test02SiAgregoUnElementoElStackNoEstaVacio
 
 	| stack unElemento |
@@ -76,10 +76,10 @@ test05ultimoElementoAgregadoEsElPrimeroEnSerRetirado
 	
 	self assert: segundoElemento equals: ultimoElemento.! !
 
-!StackTest methodsFor: 'as yet unclassified' stamp: 'UM 10/8/2022 19:35:22'!
+!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/8/2022 16:15:26'!
 test06esPosibleObtenerElUltimoElementoSinRetirarloDelStack
 
-	| stack primerElemento segundoElemento primerTop segundoTop |
+	| stack primerElemento segundoElemento |
 	
 	stack := Stack new.
 	
@@ -90,15 +90,11 @@ test06esPosibleObtenerElUltimoElementoSinRetirarloDelStack
 	stack push: primerElemento.
 	
 	stack push: segundoElemento.
-	primerTop := stack top.
-	segundoTop := stack top.
 	
-
-	"self assert: stack top doesNotChange: stack top."
-	self assert: primerTop equals: segundoTop.
+	self assert: stack top doesNotChange: stack top.
 	! !
 
-!StackTest methodsFor: 'as yet unclassified' stamp: 'UM 10/8/2022 18:52:42'!
+!StackTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/8/2022 10:39:53'!
 test07intentarHacerPopEnStackVacioLanzaError
 
 	| stack |
@@ -107,7 +103,8 @@ test07intentarHacerPopEnStackVacioLanzaError
 	
 	self should: [stack pop] 
 		raise: Error
-		withExceptionDo:[:unError | self assert: Stack elStackEstaVacioErrorDescription equals: unError messageText].! !
+		withExceptionDo:[:unError | self assert: Stack elStackEstaVacioErrorDescription equals: unError messageText].
+		"self shouldFail: stack pop."! !
 
 
 !classDefinition: #Stack category: 'StackPrimeraParte'!
@@ -124,12 +121,12 @@ initialize
 	! !
 
 
-!Stack methodsFor: 'acceso' stamp: 'VDM 10/7/2022 22:16:28'!
+!Stack methodsFor: 'accessing' stamp: 'VDM 10/7/2022 22:16:28'!
 isEmpty
 	
 	^self stackEstaVacio.! !
 
-!Stack methodsFor: 'acceso' stamp: 'VDM 10/8/2022 10:40:15'!
+!Stack methodsFor: 'accessing' stamp: 'VDM 10/8/2022 10:40:15'!
 top
 	
 	self isEmpty ifTrue: [self error: Stack elStackEstaVacioErrorDescription.].
@@ -137,7 +134,7 @@ top
 	! !
 
 
-!Stack methodsFor: 'borrado' stamp: 'VDM 10/8/2022 10:45:49'!
+!Stack methodsFor: 'removing' stamp: 'VDM 10/8/2022 10:45:49'!
 pop
 	
 	| ultimo |
@@ -146,28 +143,28 @@ pop
 	^ultimo.! !
 
 
-!Stack methodsFor: 'acceso - privado' stamp: 'VDM 10/7/2022 22:16:10'!
+!Stack methodsFor: '**PRIVADO' stamp: 'VDM 10/7/2022 22:16:10'!
 agregarUnElemento: unElementoASerAgregado 
 	
 	elementosAlmacenados add: unElementoASerAgregado.! !
 
-!Stack methodsFor: 'acceso - privado' stamp: 'VDM 10/7/2022 22:20:07'!
+!Stack methodsFor: '**PRIVADO' stamp: 'VDM 10/7/2022 22:20:07'!
 obtenerUltimoElemento
 
 	^ elementosAlmacenados last! !
 
-!Stack methodsFor: 'acceso - privado' stamp: 'VDM 10/7/2022 22:40:13'!
+!Stack methodsFor: '**PRIVADO' stamp: 'VDM 10/7/2022 22:40:13'!
 removerElemento
 
 	elementosAlmacenados removeLast.! !
 
-!Stack methodsFor: 'acceso - privado' stamp: 'VDM 10/7/2022 22:35:38'!
+!Stack methodsFor: '**PRIVADO' stamp: 'VDM 10/7/2022 22:35:38'!
 stackEstaVacio
 	
 	^elementosAlmacenados isEmpty.! !
 
 
-!Stack methodsFor: 'agregado' stamp: 'VDM 10/7/2022 20:57:53'!
+!Stack methodsFor: 'adding' stamp: 'VDM 10/7/2022 20:57:53'!
 push: unElementoASerAgregado 
 	
 	self agregarUnElemento: unElementoASerAgregado.! !
