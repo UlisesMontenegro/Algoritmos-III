@@ -282,6 +282,138 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:13:26'!
+test01SiElPrefijoTieneEspaciosDevuelveColeccionVacia
+	
+	| stack buscadorPorPrefijo  resultado objetoPusheado |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	buscadorPorPrefijo setearColaboradorInterno: stack.
+	
+	objetoPusheado := 'Hola amigo'.
+	
+	stack push: objetoPusheado.
+	
+	resultado := buscadorPorPrefijo find: 'Hol a'.
+	
+	self assert: resultado isEmpty.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:00:26'!
+test02SiElPrefijoEsUnStringVacioDevuelveColeccionVacia
+	
+	| stack buscadorPorPrefijo  resultado objetoPusheado |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	objetoPusheado := 'Hola amigo'.
+	
+	stack push: objetoPusheado.
+	
+	resultado := buscadorPorPrefijo find: ''.
+	
+	self assert: resultado isEmpty.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:00:49'!
+test03SiElPrefijoEsUnNumeroDevuelveColeccionVacia
+	
+	| stack buscadorPorPrefijo  resultado objetoPusheado |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	objetoPusheado := 'Hola amigo'.
+	
+	stack push: objetoPusheado.
+	
+	resultado := buscadorPorPrefijo find: 1.
+	
+	self assert: resultado isEmpty.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:01:42'!
+test04SiNoEncuentraLoBuscadoDevuelveUnColeccionVacia
+	
+	| objetoPusheado stack buscadorPorPrefijo  |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	objetoPusheado := 'Hola'.
+		
+	stack push: objetoPusheado .
+	
+	buscadorPorPrefijo find: 'Ch'.
+	
+	self assert: [buscadorPorPrefijo find: 'Ch' isEmpty].! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:02:23'!
+test05DevuelveTodasLasAparicionesDeLasOracionesConElPrefijoBuscado
+	
+	| stack buscadorPorPrefijo  primerObjetoPusheado segundoObjetoPusheado tercerObjetoPusheado resultado resultadoEsperado |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	primerObjetoPusheado := 'Hola amigo'.
+	segundoObjetoPusheado := 'Bye enemigo'.
+	tercerObjetoPusheado := 'Holanda lindo pais'.
+	
+	resultadoEsperado := OrderedCollection with: primerObjetoPusheado with: tercerObjetoPusheado.
+	stack push: primerObjetoPusheado.
+	stack push: segundoObjetoPusheado.
+	stack push: tercerObjetoPusheado.
+	
+	resultado := buscadorPorPrefijo find: 'Hol'.
+	
+	self assert: resultado equals: resultadoEsperado.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:02:40'!
+test06DevuelveTodasLasAparicionesDeLasOracionesRepetidasConElPrefijoBuscado
+	
+	| stack buscadorPorPrefijo  primerObjetoPusheado segundoObjetoPusheado tercerObjetoPusheado resultado resultadoEsperado |
+	
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	primerObjetoPusheado := 'Hola amigo'.
+	segundoObjetoPusheado := 'Bye enemigo'.
+	tercerObjetoPusheado := 'Hola amigo'.
+	
+	resultadoEsperado := OrderedCollection with: primerObjetoPusheado with: tercerObjetoPusheado.
+	
+	stack push: primerObjetoPusheado.
+	stack push: segundoObjetoPusheado.
+	stack push: tercerObjetoPusheado.
+	
+	resultado := buscadorPorPrefijo find: 'Hol'.
+	
+	self assert: resultado equals: resultadoEsperado.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:02:55'!
+test07AlDevolverLoEncontradoElStackMantieneElOrden
+	
+	| stack buscadorPorPrefijo primerObjetoPusheado segundoObjetoPusheado |
+	stack := OOStack new.
+	buscadorPorPrefijo := SentenceFinderByPrefix new.
+	
+	
+	
+	primerObjetoPusheado := 'Hola'.
+	segundoObjetoPusheado := 'Chau'.
+	
+	stack push: primerObjetoPusheado .
+	stack push: segundoObjetoPusheado .
+	
+	buscadorPorPrefijo find: 'Ho'.
+	
+	self assert: segundoObjetoPusheado equals: stack pop.
+	self assert: primerObjetoPusheado equals: stack pop.
+	self assert: stack isEmpty 
+	
+	
+	! !
+
 
 !classDefinition: #Contenedor category: 'Stack-Exercise'!
 Object subclass: #Contenedor
@@ -407,10 +539,10 @@ add: unElementoASerIngresado
 	
 	^self.! !
 
-!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 13:01:07'!
+!ContenedorVacio methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 15:09:10'!
 inicializarCon: unaColeccionOrdenada
 
-	elementosAlmacenados := unaColeccionOrdenada.! !
+	! !
 
 !ContenedorVacio methodsFor: 'as yet unclassified'!
 isEmpty
@@ -561,7 +693,28 @@ stackEmptyErrorDescription
 
 !classDefinition: #SentenceFinderByPrefix category: 'Stack-Exercise'!
 Object subclass: #SentenceFinderByPrefix
-	instanceVariableNames: ''
+	instanceVariableNames: 'stack'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:39:12'!
+find: unPrefijo
+	| stackAuxiliar elemento |
+	
+	stackAuxiliar := OOStack new.
+	
+	[stack isEmpty not] whileTrue: [
+		elemento := stack pop.
+		stackAuxiliar push: elemento].
+	
+	[stackAuxiliar isEmpty not] whileTrue: [
+		elemento := stackAuxiliar pop.
+		stack push: elemento.
+		].
+	^ OrderedCollection new.! !
+
+!SentenceFinderByPrefix methodsFor: 'as yet unclassified' stamp: 'VDM 10/14/2022 16:14:29'!
+setearColaboradorInterno: unStack
+
+	stack := unStack.! !
