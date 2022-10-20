@@ -186,56 +186,49 @@ test12UnExtractorConMotorDeSolidosDesgastadoTieneUnPeorRendimiento
 ! !
 
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/19/2022 17:48:16'!
+!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:20:08'!
 extractorConMotorDeSolidosConDesgaste: unNivelDeDesgaste
 	| extractor motor |
 	extractor := Extractor deCarbon.
 	
 	motor := MotorDeSolidos new.
-	motor tipo: #motorDeSolidos.
-	motor nivelDeDesgaste: unNivelDeDesgaste.
-	
+	motor desgastate: unNivelDeDesgaste.	
 	extractor motor: motor.
 	
 	^extractor
 ! !
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/19/2022 17:48:07'!
+!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:05'!
 extractorConMotorDeSolidosSinDesgaste
 	| extractor motor |
 	extractor := Extractor deCarbon.
 	
 	motor := MotorDeSolidos new.
-	motor tipo: #motorDeSolidos.
-	motor nivelDeDesgaste: 0.
 	
 	extractor motor: motor.
 	
 	^extractor
 ! !
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/19/2022 17:47:34'!
+!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:22'!
 extractorConMotorUniversalConDesgaste: unNivelDeDesgaste
 	| extractor motor |
 	extractor := Extractor deCarbon.
 	
 	motor := MotorUniversal new.
-	motor tipo: #motorUniversal.
-	motor nivelDeDesgaste: unNivelDeDesgaste.
+	motor desgastate: unNivelDeDesgaste.
 	
 	extractor motor: motor.
 	
 	^extractor
 ! !
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/19/2022 17:50:13'!
+!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:29'!
 extractorConMotorUniversalSinDesgaste
 	| extractor motor |
 	extractor := Extractor deCarbon.
 	
-	motor := MotorUniversal new.
-	motor nivelDeDesgaste: 0.
-	
+	motor := MotorUniversal new.	
 	extractor motor: motor.
 	
 	^extractor
@@ -265,9 +258,9 @@ extraer
 	^(self obtenerUnaCantidadDeMenas: cantidadDeMenas).! !
 
 
-!Extractor methodsFor: 'initialization' stamp: 'JMB 6/8/2021 22:27:09'!
+!Extractor methodsFor: 'initialization' stamp: 'UM 10/20/2022 19:28:16'!
 initializeWithMaterial: material 
-	self ponerEnCeroLaEnergia.	
+	energiaActual := 0 * joule.	
 	producto := material.! !
 
 
@@ -300,19 +293,15 @@ menasAExtraerSegunEnergiaActual
 obtenerUnaCantidadDeMenas: cantidadDeMenas
 	^(Array new: cantidadDeMenas withAll: producto) asOrderedCollection.! !
 
-!Extractor methodsFor: 'private' stamp: 'SF 5/5/2021 20:10:18'!
-ponerEnCeroLaEnergia
-	energiaActual := 0 * joule.! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Extractor class' category: 'AlgoIII-2021-1C-1erParcial'!
 Extractor class
 	instanceVariableNames: ''!
 
-!Extractor class methodsFor: 'as yet unclassified' stamp: 'JMB 6/11/2021 21:16:05'!
+!Extractor class methodsFor: 'as yet unclassified' stamp: 'UM 10/20/2022 19:14:54'!
 deCarbon
-	^self new initializeWithMaterial: #unaMenaDeCarbon.! !
+	^self new initializeWithMaterial: UnaMenaDeCarbon new.! !
 
 
 !classDefinition: #Motor category: 'AlgoIII-2021-1C-1erParcial'!
@@ -322,9 +311,14 @@ Object subclass: #Motor
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!Motor methodsFor: 'private' stamp: 'UM 10/19/2022 18:02:59'!
+!Motor methodsFor: 'private' stamp: 'UM 10/19/2022 17:29:35'!
+convertirAUnidadDeCombustible: unaUnidadDeCombustible
+
+	self subclassResponsibility.! !
+
+!Motor methodsFor: 'private' stamp: 'UM 10/20/2022 20:16:36'!
 transformarEnEnergiaUnaUnidad: unaUnidadDeCombustible
-	^self convertirAUnidadDeCombustible: unaUnidadDeCombustible.! !
+	self subclassResponsibility.! !
 
 
 !Motor methodsFor: 'funcionamiento' stamp: 'UM 10/19/2022 17:04:37'!
@@ -333,27 +327,25 @@ transformarEnEnergia: unidadesDeCombustible
 	^unidadesDeCombustible sum: [:unidadDeCombustible | self transformarEnEnergiaUnaUnidad: unidadDeCombustible] ifEmpty: [0*joule].! !
 
 
-!Motor methodsFor: 'accessing' stamp: 'JMB 6/8/2021 22:37:21'!
-nivelDeDesgaste: unNivelDeDesgaste
-	nivelDeDesgaste := unNivelDeDesgaste ! !
-
-!Motor methodsFor: 'accessing' stamp: 'JMB 6/8/2021 22:37:33'!
-tipo: unTipoDeMotor
-	tipo := unTipoDeMotor ! !
-
-
-!Motor methodsFor: 'as yet unclassified' stamp: 'UM 10/19/2022 17:29:35'!
-convertirAUnidadDeCombustible: unaUnidadDeCombustible
+!Motor methodsFor: 'accessing' stamp: 'UM 10/20/2022 19:30:10'!
+desgastate
 
 	self subclassResponsibility.! !
 
-
-!classDefinition: #CAMBIARNOMBRES category: 'AlgoIII-2021-1C-1erParcial'!
-Motor subclass: #CAMBIARNOMBRES
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'AlgoIII-2021-1C-1erParcial'!
+!Motor methodsFor: 'accessing' stamp: 'UM 10/20/2022 20:32:22'!
+energiaDeUnLitroDeGasoil
+
+	self subclassResponsibility. ! !
+
+!Motor methodsFor: 'accessing' stamp: 'UM 10/20/2022 20:32:39'!
+energiaDeUnTrozoDeMadera
+
+	self subclassResponsibility.! !
+
+!Motor methodsFor: 'accessing' stamp: 'UM 10/20/2022 20:32:33'!
+energiaDeUnaMenaDeCarbon
+
+	self subclassResponsibility.! !
 
 
 !classDefinition: #MotorDeSolidos category: 'AlgoIII-2021-1C-1erParcial'!
@@ -363,22 +355,37 @@ Motor subclass: #MotorDeSolidos
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!MotorDeSolidos methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:11:43'!
-convertirAUnidadDeCombustible: unaUnidadDeCombustible
+!MotorDeSolidos methodsFor: 'private' stamp: 'UM 10/20/2022 20:16:25'!
+transformarEnEnergiaUnaUnidad: unaUnidadDeCombustible
 
-	^ (unaUnidadDeCombustible energiaDeUnaUnidadDeCombustibleSoySolido) * (1 - nivelDeDesgaste ).
-	
-	"Material energiaDeUnaUnidadDeCombustible."
-	"XXX eeee"
-	"unaUnidadDeCombustible = #unTrozoDeMadera ifTrue: [^(26 * joule)* (1 - nivelDeDesgaste)].
-	unaUnidadDeCombustible = #unaMenaDeCarbon ifTrue: [^(52 * joule)* (1 - nivelDeDesgaste)].
-	unaUnidadDeCombustible = #unLitroDeGasoil ifTrue: [^(25 * joule)* (1 - nivelDeDesgaste)].
-	self error: 'Tipo de combustible desconocido: ', unaUnidadDeCombustible asString."! !
+	^ (unaUnidadDeCombustible energiaDeUnaUnidadDeCombustibleSoySolido: self) * (1 - nivelDeDesgaste ).! !
 
-!MotorDeSolidos methodsFor: 'as yet unclassified' stamp: 'UM 10/19/2022 18:02:08'!
+
+!MotorDeSolidos methodsFor: 'inicializacion' stamp: 'UM 10/20/2022 19:39:04'!
 initialize
+	tipo := #motorDeSolidos.
+	nivelDeDesgaste := 0.! !
 
-	tipo := #motorDeSolidos.! !
+
+!MotorDeSolidos methodsFor: 'acceso' stamp: 'UM 10/20/2022 19:21:19'!
+desgastate: unNivelDeDesgaste
+
+	nivelDeDesgaste := nivelDeDesgaste + unNivelDeDesgaste.! !
+
+!MotorDeSolidos methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:30:20'!
+energiaDeUnLitroDeGasoil
+
+	^ (25 * joule).! !
+
+!MotorDeSolidos methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:30:15'!
+energiaDeUnTrozoDeMadera
+
+	^ (26 * joule).! !
+
+!MotorDeSolidos methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:30:09'!
+energiaDeUnaMenaDeCarbon
+
+	^ (52 * joule).! !
 
 
 !classDefinition: #MotorDesconocido category: 'AlgoIII-2021-1C-1erParcial'!
@@ -388,15 +395,32 @@ Motor subclass: #MotorDesconocido
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!MotorDesconocido methodsFor: 'as yet unclassified' stamp: 'UM 10/19/2022 17:33:00'!
-convertirAUnidadDeCombustible: unaUnidadDeCombustible
 
-	self error: 'Tipo de motor desconocido: ', tipo asString.! !
-
-!MotorDesconocido methodsFor: 'as yet unclassified' stamp: 'UM 10/19/2022 17:52:49'!
+!MotorDesconocido methodsFor: 'inicializacion' stamp: 'UM 10/20/2022 19:39:09'!
 initialize
+	tipo := #motorDesconocido.
+	nivelDeDesgaste := 0.! !
 
-	tipo := #motorDesconocido.! !
+
+!MotorDesconocido methodsFor: 'acceso' stamp: 'UM 10/20/2022 19:22:22'!
+desgastate: unNivelDeDesgaste
+
+	^self.! !
+
+!MotorDesconocido methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:22:50'!
+energiaDeUnLitroDeGasoil
+
+	^self.! !
+
+!MotorDesconocido methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:23:38'!
+energiaDeUnTrozoDeMadera
+
+	^self.! !
+
+!MotorDesconocido methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:25:19'!
+energiaDeUnaMenaDeCarbon
+
+	^self.! !
 
 
 !classDefinition: #MotorUniversal category: 'AlgoIII-2021-1C-1erParcial'!
@@ -406,19 +430,37 @@ Motor subclass: #MotorUniversal
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!MotorUniversal methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:10:14'!
-convertirAUnidadDeCombustible: unaUnidadDeCombustible
-	"	unaUnidadDeCombustible energiaDeUnaUnidadDeCombustibleSoyUniversal."
-	^ (unaUnidadDeCombustible energiaDeUnaUnidadDeCombustibleSoyUniversal) * (1 - nivelDeDesgaste ).
-	"unaUnidadDeCombustible = #unTrozoDeMadera ifTrue: [^(13 * joule)* (1 - nivelDeDesgaste)].
-	unaUnidadDeCombustible = #unaMenaDeCarbon ifTrue: [^(26 * joule)* (1 - nivelDeDesgaste)].
-	unaUnidadDeCombustible = #unLitroDeGasoil ifTrue: [^(100 * joule)* (1 - nivelDeDesgaste)].
-	self error: 'Tipo de combustible desconocido: ', unaUnidadDeCombustible asString."! !
-
-!MotorUniversal methodsFor: 'as yet unclassified' stamp: 'UM 10/19/2022 17:53:02'!
+!MotorUniversal methodsFor: 'inicializacion' stamp: 'UM 10/20/2022 19:39:15'!
 initialize
-	
-	tipo := #motorUniversal.! !
+	tipo := #motorUniversal.
+	nivelDeDesgaste := 0.! !
+
+
+!MotorUniversal methodsFor: 'acceso' stamp: 'UM 10/20/2022 19:21:39'!
+desgastate: unNivelDeDesgaste
+
+	nivelDeDesgaste := unNivelDeDesgaste.! !
+
+!MotorUniversal methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:31:14'!
+energiaDeUnLitroDeGasoil
+
+	^ (100 * joule).! !
+
+!MotorUniversal methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:30:34'!
+energiaDeUnTrozoDeMadera
+
+	^ (13 * joule).! !
+
+!MotorUniversal methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:30:38'!
+energiaDeUnaMenaDeCarbon
+
+	^ (26 * joule).! !
+
+
+!MotorUniversal methodsFor: 'privado' stamp: 'UM 10/20/2022 20:16:53'!
+transformarEnEnergiaUnaUnidad: unaUnidadDeCombustible
+
+	^ (unaUnidadDeCombustible energiaDeUnaUnidadDeCombustibleSoyUniversal: self) * (1 - nivelDeDesgaste ).! !
 
 
 !classDefinition: #UnidadDeCombustible category: 'AlgoIII-2021-1C-1erParcial'!
@@ -428,10 +470,15 @@ Object subclass: #UnidadDeCombustible
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!UnidadDeCombustible methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 16:56:50'!
+!UnidadDeCombustible methodsFor: 'acceso' stamp: 'UM 10/20/2022 19:41:56'!
 energiaDeUnaUnidadDeCombustibleSoySolido
 
-	"self error: 'Tipo de combustible desconocido: ', 	unaUnidadDeCombustible asString"! !
+	self error: 'Tipo de combustible desconocido: ', 	self asString.! !
+
+!UnidadDeCombustible methodsFor: 'acceso' stamp: 'UM 10/20/2022 19:55:33'!
+energiaDeUnaUnidadDeCombustibleSoyUniversal
+
+	self error: 'Tipo de combustible desconocido: ', 	self asString.! !
 
 
 !classDefinition: #UnLitroDeGasoil category: 'AlgoIII-2021-1C-1erParcial'!
@@ -441,15 +488,17 @@ UnidadDeCombustible subclass: #UnLitroDeGasoil
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!UnLitroDeGasoil methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:02:37'!
-energiaDeUnaUnidadDeCombustibleSoySolido
+!UnLitroDeGasoil methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:09:55'!
+energiaDeUnaUnidadDeCombustibleSoySolido: unMotorDeSolidos
 
-	^(25 * joule)! !
+	^unMotorDeSolidos energiaDeUnLitroDeGasoil
+	"^(25 * joule)"! !
 
-!UnLitroDeGasoil methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:02:45'!
-energiaDeUnaUnidadDeCombustibleSoyUniversal
+!UnLitroDeGasoil methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:17:36'!
+energiaDeUnaUnidadDeCombustibleSoyUniversal: unMotorUniversal
 
-	^(100 * joule)! !
+	^unMotorUniversal energiaDeUnLitroDeGasoil
+	"^(100 * joule)"! !
 
 
 !classDefinition: #UnTrozoDeMadera category: 'AlgoIII-2021-1C-1erParcial'!
@@ -459,15 +508,18 @@ UnidadDeCombustible subclass: #UnTrozoDeMadera
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!UnTrozoDeMadera methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:02:55'!
-energiaDeUnaUnidadDeCombustibleSoySolido
+!UnTrozoDeMadera methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:19:12'!
+energiaDeUnaUnidadDeCombustibleSoySolido: unMotorDeSolidos
+
+	^unMotorDeSolidos energiaDeUnTrozoDeMadera.
 	
-	^(26 * joule)! !
+	"^(26 * joule)"! !
 
-!UnTrozoDeMadera methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:03:06'!
-energiaDeUnaUnidadDeCombustibleSoyUniversal
+!UnTrozoDeMadera methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:19:21'!
+energiaDeUnaUnidadDeCombustibleSoyUniversal: unMotorUniversal
 
-	^(13 * joule)! !
+	^unMotorUniversal energiaDeUnTrozoDeMadera.
+	"^(13 * joule)"! !
 
 
 !classDefinition: #UnaMenaDeCarbon category: 'AlgoIII-2021-1C-1erParcial'!
@@ -477,12 +529,16 @@ UnidadDeCombustible subclass: #UnaMenaDeCarbon
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
 
-!UnaMenaDeCarbon methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:02:23'!
-energiaDeUnaUnidadDeCombustibleSoySolido
+!UnaMenaDeCarbon methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:20:14'!
+energiaDeUnaUnidadDeCombustibleSoySolido: unMotorDeSolidos
 
-	^(52 * joule)! !
+	^unMotorDeSolidos energiaDeUnaMenaDeCarbon.
 
-!UnaMenaDeCarbon methodsFor: 'as yet unclassified' stamp: 'VDM 10/20/2022 17:02:10'!
-energiaDeUnaUnidadDeCombustibleSoyUniversal
+	"^(52 * joule)"! !
 
-	^(26 * joule)! !
+!UnaMenaDeCarbon methodsFor: 'acceso' stamp: 'UM 10/20/2022 20:19:46'!
+energiaDeUnaUnidadDeCombustibleSoyUniversal: unMotorUniversal
+
+	^unMotorUniversal energiaDeUnaMenaDeCarbon.
+
+	"^(26 * joule)"! !
