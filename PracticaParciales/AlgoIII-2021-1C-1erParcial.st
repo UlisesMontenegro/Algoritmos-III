@@ -24,10 +24,11 @@ costoDeExtraccionPorMena
 	^5 * joule
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/11/2021 23:58:00'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 21:39:20'!
 test01UnExtractorSinCombustibleNoExtraeMenasNiLeSobraEnergia
 	| extractor menasExtraidas |
-	extractor := self extractorConMotorUniversalSinDesgaste.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
+	
 	extractor alimentarEnergiaCon: #().
 	
 	menasExtraidas _ extractor extraer.
@@ -36,150 +37,136 @@ test01UnExtractorSinCombustibleNoExtraeMenasNiLeSobraEnergia
 	self assert: 0 * joule equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:35:49'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:11:42'!
 test02UnExtractorConUnTrozoDeMaderaExtraeMenasSegunLaEnergiaGenerada
 	| extractor menasExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
+	
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
 	combustible := OrderedCollection with: self unaUnidadDeMadera.
-	extractor alimentarEnergiaCon: combustible.
 	
-	menasExtraidas _ extractor extraer.
-	
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
+
 	self assert: (13*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (13*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:37:39'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:14:14'!
 test03UnExtractorConUnaMenaDeCarbonExtraeMenasSegunLaEnergiaGenerada
 	| extractor menasExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
 	combustible := OrderedCollection with: self unaUnidadDeCarbon.
-	extractor alimentarEnergiaCon: combustible.
-	
-	menasExtraidas _ extractor extraer.
-	
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	self assert: (26*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (26*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:37:46'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:14:39'!
 test04UnExtractorConUnLitroDeGasoilExtraeMenasSegunLaEnergiaGenerada
 	| extractor menasExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
-	combustible := OrderedCollection with: self unaUnidadDeGasoil.
-	extractor alimentarEnergiaCon: combustible.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
 	
-	menasExtraidas _ extractor extraer.
+	combustible := OrderedCollection with: self unaUnidadDeGasoil.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: (100*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.	
 	self assert: (100*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:37:57'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:15:29'!
 test05UnExtractorMasDeUnaUnidadDeCombustibleExtraeMenasSegunLaEnergiaGenerada
 	| extractor menasExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
-	combustible := OrderedCollection 	with: self unaUnidadDeMadera 	with: self unaUnidadDeMadera.
-	extractor alimentarEnergiaCon: combustible.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
 	
-	menasExtraidas _ extractor extraer.
+	combustible := OrderedCollection 	with: self unaUnidadDeMadera 	with: self unaUnidadDeMadera.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: (2*13*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (2*13*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:39:27'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:16:17'!
 test06UnExtractorConDiferentesTiposDeCombustibleExtraeMenasSegunLaEnergiaGenerada
 	| extractor menasExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
+	
 	combustible := OrderedCollection 	 	
 		with: self unaUnidadDeCarbon 
 		with: self unaUnidadDeGasoil.
-	extractor alimentarEnergiaCon: combustible.
-	
-	menasExtraidas _ extractor extraer.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: ((26*joule) + (100*joule )) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: ((26*joule) + (100*joule )) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'LL 6/12/2021 00:39:36'!
+!ExtractorTest methodsFor: 'tests con motor universal' stamp: 'VDM 10/20/2022 22:23:30'!
 test10UnExtractorDeCarbonPuedeUsarSuProductoComoCombustible
 	| extractor menasDeCarbonExtraidas combustible |
-	extractor := self extractorConMotorUniversalSinDesgaste.
+	extractor := self extractorConMotorUniversalConDesgaste: 0.
+	
 	combustible := OrderedCollection with: self unaUnidadDeMadera.
-	extractor alimentarEnergiaCon: combustible.
-	menasDeCarbonExtraidas _ extractor extraer.
-	extractor alimentarEnergiaCon: (menasDeCarbonExtraidas first: 1).
+	menasDeCarbonExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
-	menasDeCarbonExtraidas _ extractor extraer.
-	
+	menasDeCarbonExtraidas := self extraerMenasCon: extractor alimentadoCon: (menasDeCarbonExtraidas first: 1).
+
 	self assert: (29*joule) // self costoDeExtraccionPorMena equals: menasDeCarbonExtraidas size.
 	self assert: (29*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
 
-!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'LL 6/12/2021 00:39:42'!
+!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'VDM 10/20/2022 22:24:07'!
 test07UnExtractorConMotorDeSolidosOptimizaElRendimientoDeLaMadera
 	| extractor combustible menasExtraidas |
-	extractor := self extractorConMotorDeSolidosSinDesgaste.
-	combustible := OrderedCollection with: self unaUnidadDeMadera.
-	extractor alimentarEnergiaCon: combustible.
+	extractor := self extractorConMotorDeSolidosConDesgaste: 0.
 	
-	menasExtraidas _ extractor extraer.
+	combustible := OrderedCollection with: self unaUnidadDeMadera.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: (26*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (26*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'LL 6/12/2021 00:39:48'!
+!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'VDM 10/20/2022 22:24:27'!
 test08UnExtractorConMotorDeSolidosOptimizaElRendimientoDelCarbon
 	| extractor combustible menasExtraidas |
-	extractor := self extractorConMotorDeSolidosSinDesgaste.
-	combustible := OrderedCollection with: self unaUnidadDeCarbon.
-	extractor alimentarEnergiaCon: combustible.
+	extractor := self extractorConMotorDeSolidosConDesgaste: 0.
 	
-	menasExtraidas _ extractor extraer.
+	combustible := OrderedCollection with: self unaUnidadDeCarbon.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: (52*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (52*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'LL 6/12/2021 00:39:56'!
+!ExtractorTest methodsFor: 'tests con motor de solidos' stamp: 'VDM 10/20/2022 22:24:49'!
 test09UnExtractorConMotorDeSolidosDegradaElRendimientoDelGasoil
 	| extractor combustible menasExtraidas |
-	extractor := self extractorConMotorDeSolidosSinDesgaste.
-	combustible := OrderedCollection with: self unaUnidadDeGasoil.
-	extractor alimentarEnergiaCon: combustible.
+	extractor := self extractorConMotorDeSolidosConDesgaste: 0.
 	
-	menasExtraidas _ extractor extraer.
+	combustible := OrderedCollection with: self unaUnidadDeGasoil.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: (25*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: (25*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
 
-!ExtractorTest methodsFor: 'tests con motor con desgaste' stamp: 'LL 6/12/2021 00:40:18'!
+!ExtractorTest methodsFor: 'tests con motor con desgaste' stamp: 'VDM 10/20/2022 22:25:26'!
 test11UnExtractorConMotorUniversalDesgastadoTieneUnPeorRendimiento
 	| extractor menasExtraidas combustible |
 	extractor := self extractorConMotorUniversalConDesgaste: 0.5.
 	combustible := OrderedCollection with: self unaUnidadDeGasoil.
-	extractor alimentarEnergiaCon: combustible.
-	
-	menasExtraidas _ extractor extraer.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: ((1 - 0.5)*100*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: ((1 - 0.5)*100*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
 ! !
 
-!ExtractorTest methodsFor: 'tests con motor con desgaste' stamp: 'LL 6/12/2021 00:40:31'!
+!ExtractorTest methodsFor: 'tests con motor con desgaste' stamp: 'VDM 10/20/2022 22:25:52'!
 test12UnExtractorConMotorDeSolidosDesgastadoTieneUnPeorRendimiento
 	| extractor menasExtraidas combustible |
 	extractor := self extractorConMotorDeSolidosConDesgaste: 0.5.
 	combustible := OrderedCollection with: self unaUnidadDeCarbon .
-	extractor alimentarEnergiaCon: combustible.
-	
-	menasExtraidas _ extractor extraer.
+	menasExtraidas := self extraerMenasCon: extractor alimentadoCon: combustible.
 	
 	self assert: ((1 - 0.5)*52*joule) // self costoDeExtraccionPorMena equals: menasExtraidas size.
 	self assert: ((1 - 0.5)*52*joule) \\ self costoDeExtraccionPorMena equals: extractor energiaDisponible.
@@ -198,18 +185,6 @@ extractorConMotorDeSolidosConDesgaste: unNivelDeDesgaste
 	^extractor
 ! !
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:05'!
-extractorConMotorDeSolidosSinDesgaste
-	| extractor motor |
-	extractor := Extractor deCarbon.
-	
-	motor := MotorDeSolidos new.
-	
-	extractor motor: motor.
-	
-	^extractor
-! !
-
 !ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:22'!
 extractorConMotorUniversalConDesgaste: unNivelDeDesgaste
 	| extractor motor |
@@ -223,16 +198,12 @@ extractorConMotorUniversalConDesgaste: unNivelDeDesgaste
 	^extractor
 ! !
 
-!ExtractorTest methodsFor: 'extractores' stamp: 'UM 10/20/2022 19:23:29'!
-extractorConMotorUniversalSinDesgaste
-	| extractor motor |
-	extractor := Extractor deCarbon.
-	
-	motor := MotorUniversal new.	
-	extractor motor: motor.
-	
-	^extractor
-! !
+!ExtractorTest methodsFor: 'extractores' stamp: 'VDM 10/20/2022 22:07:45'!
+extraerMenasCon: unExtractor alimentadoCon: unCombustible
+
+	unExtractor alimentarEnergiaCon: unCombustible.
+
+	^ unExtractor extraer.! !
 
 
 !classDefinition: #Extractor category: 'AlgoIII-2021-1C-1erParcial'!
@@ -394,7 +365,6 @@ Motor subclass: #MotorDesconocido
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'AlgoIII-2021-1C-1erParcial'!
-
 
 !MotorDesconocido methodsFor: 'inicializacion' stamp: 'UM 10/20/2022 19:39:09'!
 initialize
