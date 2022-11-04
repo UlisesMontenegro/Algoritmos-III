@@ -5,8 +5,8 @@ TestCase subclass: #MarsRoverTests
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:44:45'!
-test01_CAMBIAR_SiRecibeUnaCadenaVaciaNoHaceNada
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:22:15'!
+test01SiRecibeUnaCadenaVaciaNoHaceNada
 
 	| marsRover mensajeVacio posicionInicial puntoCardinalInicial |
 	
@@ -22,8 +22,8 @@ test01_CAMBIAR_SiRecibeUnaCadenaVaciaNoHaceNada
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:44:45'!
-test02_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElNorte
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:22:26'!
+test02SiEstaApuntandoHaciaElNorteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElNorte
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -39,8 +39,8 @@ test02_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoAvanzarSeMueveUnPuntoHac
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:44:45'!
-test03_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElSur
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:22:47'!
+test03SiEstaApuntandoHaciaElNorteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElSur
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -56,8 +56,8 @@ test03_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoHaciaAtrasSeMueveUnPunto
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:06:11'!
-test04_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoGirarIzquierdaApuntaHaciaElOesteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:22:55'!
+test04SiEstaApuntandoHaciaElNorteYRecibeComandoGirarIzquierdaApuntaHaciaElOesteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -73,8 +73,8 @@ test04_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoGirarIzquierdaApuntaHaci
 	self assert: (marsRover puntoCardinalActual isKindOf: Oeste).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:07:21'!
-test05_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoGirarDerechaApuntaHaciaElEsteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:02'!
+test05SiEstaApuntandoHaciaElNorteYRecibeComandoGirarDerechaApuntaHaciaElEsteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -90,8 +90,8 @@ test05_CAMBIAR_SiEstaApuntandoHaciaElNorteYRecibeComandoGirarDerechaApuntaHaciaE
 	self assert: (marsRover puntoCardinalActual isKindOf: Este).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:56:21'!
-test06_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElEste
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:09'!
+test06SiEstaApuntandoHaciaElEsteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElEste
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -107,8 +107,8 @@ test06_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoAvanzarSeMueveUnPuntoHaci
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:56:30'!
-test07_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElOeste
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:23'!
+test07SiEstaApuntandoHaciaElEsteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElOeste
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -124,8 +124,8 @@ test07_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoHaciaAtrasSeMueveUnPuntoH
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:10:48'!
-test08_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoGirarIzquierdaApuntaHaciaElNorteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:32'!
+test08SiEstaApuntandoHaciaElEsteYRecibeComandoGirarIzquierdaApuntaHaciaElNorteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -141,8 +141,8 @@ test08_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoGirarIzquierdaApuntaHacia
 	self assert: (marsRover puntoCardinalActual isKindOf: Norte).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:12:03'!
-test09_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoGirarDerechaApuntaHaciaElSurYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:38'!
+test09SiEstaApuntandoHaciaElEsteYRecibeComandoGirarDerechaApuntaHaciaElSurYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -158,8 +158,8 @@ test09_CAMBIAR_SiEstaApuntandoHaciaElEsteYRecibeComandoGirarDerechaApuntaHaciaEl
 	self assert: (marsRover puntoCardinalActual isKindOf: Sur).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:57:17'!
-test10_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoAvanzarSeMueveUnPuntoHaciaElSur
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:48'!
+test10SiEstaApuntandoHaciaElSurYRecibeComandoAvanzarSeMueveUnPuntoHaciaElSur
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -175,8 +175,8 @@ test10_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoAvanzarSeMueveUnPuntoHacia
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:57:25'!
-test11_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElNorte
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:53'!
+test11SiEstaApuntandoHaciaElSurYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElNorte
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -192,8 +192,8 @@ test11_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoHaciaAtrasSeMueveUnPuntoHa
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:12:38'!
-test12_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoGirarIzquierdaApuntaHaciaElEsteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:23:58'!
+test12SiEstaApuntandoHaciaElSurYRecibeComandoGirarIzquierdaApuntaHaciaElEsteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -209,8 +209,8 @@ test12_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoGirarIzquierdaApuntaHaciaE
 	self assert: (marsRover puntoCardinalActual isKindOf: Este).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:13:07'!
-test13_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoGirarDerechaApuntaHaciaElOesteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:24:04'!
+test13SiEstaApuntandoHaciaElSurYRecibeComandoGirarDerechaApuntaHaciaElOesteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -226,8 +226,8 @@ test13_CAMBIAR_SiEstaApuntandoHaciaElSurYRecibeComandoGirarDerechaApuntaHaciaElO
 	self assert: (marsRover puntoCardinalActual isKindOf: Oeste).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:57:59'!
-test14_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElOeste
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:24:09'!
+test14SiEstaApuntandoHaciaElOesteYRecibeComandoAvanzarSeMueveUnPuntoHaciaElOeste
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -243,8 +243,8 @@ test14_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoAvanzarSeMueveUnPuntoHac
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:58:20'!
-test15_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElEste
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:24:14'!
+test15SiEstaApuntandoHaciaElOesteYRecibeComandoHaciaAtrasSeMueveUnPuntoHaciaElEste
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -260,8 +260,8 @@ test15_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoHaciaAtrasSeMueveUnPunto
 	self assert: puntoCardinalInicial equals: marsRover puntoCardinalActual.
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:13:30'!
-test16_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoGirarIzquierdaApuntaHaciaElSurYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:24:20'!
+test16SiEstaApuntandoHaciaElOesteYRecibeComandoGirarIzquierdaApuntaHaciaElSurYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -277,8 +277,8 @@ test16_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoGirarIzquierdaApuntaHaci
 	self assert: (marsRover puntoCardinalActual isKindOf: Sur).
 	! !
 
-!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:13:55'!
-test17_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoGirarDerechaApuntaHaciaElNorteYSeUbicaEnLasMismasCoordenadas
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:24:26'!
+test17SiEstaApuntandoHaciaElOesteYRecibeComandoGirarDerechaApuntaHaciaElNorteYSeUbicaEnLasMismasCoordenadas
 
 	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
 	
@@ -291,13 +291,64 @@ test17_CAMBIAR_SiEstaApuntandoHaciaElOesteYRecibeComandoGirarDerechaApuntaHaciaE
 	marsRover recibirMensaje: mensajeEnviadoDesdeLaTierra.
 	
 	self assert: (0@0) equals: marsRover coordenadasActuales.
+	self assert: (marsRover puntoCardinalActual isKindOf: Norte).
+	! !
+
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:13:53'!
+test18PuedeRecibirMasDeUnComandoValido
+
+	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
+	
+	posicionInicial := 0@0.
+	puntoCardinalInicial := Norte new.
+	mensajeEnviadoDesdeLaTierra := 'rf'.
+	
+	marsRover := MarsRover comenzandoEn: posicionInicial apuntandoHacia: puntoCardinalInicial.
+	
+	marsRover recibirMensaje: mensajeEnviadoDesdeLaTierra.
+	
+	self assert: (1@0) equals: marsRover coordenadasActuales.
+	self assert: (marsRover puntoCardinalActual isKindOf: Este).
+	! !
+
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:13:36'!
+test19SiRecibeUnaInstruccionNoValidaDejaDeProcesar
+
+	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
+	
+	posicionInicial := 0@0.
+	puntoCardinalInicial := Norte new.
+	mensajeEnviadoDesdeLaTierra := '4f'.
+	
+	marsRover := MarsRover comenzandoEn: posicionInicial apuntandoHacia: puntoCardinalInicial.
+	
+	marsRover recibirMensaje: mensajeEnviadoDesdeLaTierra.
+	
+	self assert: (0@0) equals: marsRover coordenadasActuales.
+	self assert: (marsRover puntoCardinalActual isKindOf: Norte).
+	! !
+
+!MarsRoverTests methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:22:04'!
+test20SePuedeMoverVariasVecesEnLaMismaDireccion
+
+	| marsRover mensajeEnviadoDesdeLaTierra posicionInicial puntoCardinalInicial |
+	
+	posicionInicial := 0@0.
+	puntoCardinalInicial := Norte new.
+	mensajeEnviadoDesdeLaTierra := 'ff'.
+	
+	marsRover := MarsRover comenzandoEn: posicionInicial apuntandoHacia: puntoCardinalInicial.
+	
+	marsRover recibirMensaje: mensajeEnviadoDesdeLaTierra.
+	
+	self assert: (0@2) equals: marsRover coordenadasActuales.
 	self assert: (marsRover puntoCardinalActual isKindOf: Norte).
 	! !
 
 
 !classDefinition: #MarsRover category: 'TDDMarsRover'!
 Object subclass: #MarsRover
-	instanceVariableNames: 'coordenadasActuales puntoCardinalActual'
+	instanceVariableNames: 'coordenadasActuales puntoCardinalActual instruccionesValidas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
@@ -322,111 +373,52 @@ apuntarHaciaElSur
 	
 	puntoCardinalActual := Sur new.! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 18:39:58'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:19:03'!
 coordenadasActuales
 	
-	^ coordenadasActuales copy.! !
+	^ coordenadasActuales.! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 19:46:29'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:06:24'!
+esUnaInstruccionValida: unaInstruccion
+
+	^instruccionesValidas includes: unaInstruccion.! !
+
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:09:11'!
 inicializadoEn: unasCoordenadasIniciales apuntandoHacia: unPuntoCardinalInicial 
 	
 	coordenadasActuales := unasCoordenadasIniciales.
 	puntoCardinalActual := unPuntoCardinalInicial.
+	instruccionesValidas := OrderedCollection with: $f with:$b with:$r with:$l.
 	! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:08:48'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:20:41'!
 moveteUnPuntoHaciaElEste
 	
-	coordenadasActuales := (1@0).! !
+	coordenadasActuales := coordenadasActuales + (1@0).! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:41:33'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:15:57'!
 moveteUnPuntoHaciaElNorte
 	
-	coordenadasActuales := (0@1).! !
+	coordenadasActuales := coordenadasActuales + (0@1).! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:09:34'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:20:48'!
 moveteUnPuntoHaciaElOeste
 	
-	coordenadasActuales := (-1@0).! !
+	coordenadasActuales := coordenadasActuales + (-1@0).! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:42:39'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:20:56'!
 moveteUnPuntoHaciaElSur
 	
-	coordenadasActuales := (0@-1).! !
+	coordenadasActuales := coordenadasActuales + (0@-1).! !
 
 !MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:15:37'!
 puntoCardinalActual
 	
 	^ puntoCardinalActual.! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:55:11'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
 recibirMensaje: unMensajeRecibido
-
-	puntoCardinalActual procesarMensaje: unMensajeRecibido soy: self.
-	
-	"puntoCardinalActual = 'N' ifTrue: [
-		unMensajeRecibido = 'f' ifTrue: [
-			coordenadasActuales := (0@1).
-		].
-		unMensajeRecibido = 'b' ifTrue: [
-			coordenadasActuales := (0@-1).
-		].
-		unMensajeRecibido = 'l' ifTrue: [
-			puntoCardinalActual := 'O'.
-			^ self.
-		].
-		unMensajeRecibido = 'r' ifTrue: [
-			puntoCardinalActual := 'E'.
-			^ self.
-		].
-	].
-	
-	puntoCardinalActual = 'E' ifTrue: [
-		unMensajeRecibido = 'f' ifTrue: [
-			coordenadasActuales := (1@0).
-		].
-		unMensajeRecibido = 'b' ifTrue: [
-			coordenadasActuales := (-1@0).
-		].
-		unMensajeRecibido = 'l' ifTrue: [
-			puntoCardinalActual := 'N'.
-		].
-		unMensajeRecibido = 'r' ifTrue: [
-			puntoCardinalActual := 'S'.
-			^self.
-		].
-	].
-	puntoCardinalActual = 'S' ifTrue: [
-		unMensajeRecibido = 'f' ifTrue: [
-			coordenadasActuales := (0@-1).
-		].
-		unMensajeRecibido = 'b' ifTrue: [
-			coordenadasActuales := (0@1).
-		].
-		unMensajeRecibido = 'l' ifTrue: [
-			puntoCardinalActual := 'E'.
-		].
-		unMensajeRecibido = 'r' ifTrue: [
-			puntoCardinalActual := 'O'.
-			^self.
-		].
-	].
-	puntoCardinalActual = 'O' ifTrue: [
-		unMensajeRecibido = 'f' ifTrue: [
-			coordenadasActuales := (-1@0).
-		].
-		unMensajeRecibido = 'b' ifTrue: [
-			coordenadasActuales := (1@0).
-		].
-		unMensajeRecibido = 'l' ifTrue: [
-			puntoCardinalActual := 'S'.
-		].
-		unMensajeRecibido = 'r' ifTrue: [
-			puntoCardinalActual := 'N'.
-		].
-	].
-
-	self error: 'Punto cardinal desconocido.'."! !
+	unMensajeRecibido do: [:unaInstruccion | (self esUnaInstruccionValida: unaInstruccion) ifTrue: [puntoCardinalActual procesarInstruccion: unaInstruccion soy: self] ifFalse: [^self]].! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -446,8 +438,8 @@ Object subclass: #PuntoCardinal
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 23:16:27'!
-procesarMensaje: unMensajeRecibido soy: unMarsRover
+!PuntoCardinal methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
+procesarInstruccion: unMensajeRecibido soy: unMarsRover
 
 	self subclassResponsibility.! !
 
@@ -459,22 +451,22 @@ PuntoCardinal subclass: #Este
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!Este methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:52:17'!
-procesarMensaje: unMensajeRecibido soy: unMarsRover   
+!Este methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
+procesarInstruccion: unCaracter soy: unMarsRover   
 
-	unMensajeRecibido isEmpty ifTrue: [
+	unCaracter isNil ifTrue: [
 		^ self.
 	].
-	unMensajeRecibido = 'f' ifTrue: [
+	unCaracter = $f ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElEste.
 	].
-	unMensajeRecibido = 'b' ifTrue: [
+	unCaracter = $b ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElOeste.
 	].
-	unMensajeRecibido = 'l' ifTrue: [
+	unCaracter = $l ifTrue: [
 		unMarsRover apuntarHaciaElNorte.
 	].
-	unMensajeRecibido = 'r' ifTrue: [
+	unCaracter = $r ifTrue: [
 		unMarsRover apuntarHaciaElSur.
 	].! !
 
@@ -494,22 +486,22 @@ PuntoCardinal subclass: #Norte
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!Norte methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:48:14'!
-procesarMensaje: unMensajeRecibido soy: unMarsRover   
+!Norte methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
+procesarInstruccion: unCaracter soy: unMarsRover   
 
-	unMensajeRecibido isEmpty ifTrue: [
+	unCaracter isNil ifTrue: [
 		^ self.
 	].
-	unMensajeRecibido = 'f' ifTrue: [
+	unCaracter = $f ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElNorte.
 	].
-	unMensajeRecibido = 'b' ifTrue: [
+	unCaracter = $b ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElSur.
 	].
-	unMensajeRecibido = 'l' ifTrue: [
+	unCaracter = $l ifTrue: [
 		unMarsRover apuntarHaciaElOeste.
 	].
-	unMensajeRecibido = 'r' ifTrue: [
+	unCaracter = $r ifTrue: [
 		unMarsRover apuntarHaciaElEste.
 	].! !
 
@@ -521,22 +513,22 @@ PuntoCardinal subclass: #Oeste
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!Oeste methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:54:50'!
-procesarMensaje: unMensajeRecibido soy: unMarsRover
+!Oeste methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
+procesarInstruccion: unCaracter soy: unMarsRover
 
-	unMensajeRecibido isEmpty ifTrue: [
+	unCaracter isNil ifTrue: [
 		^ self.
 	].
-	unMensajeRecibido = 'f' ifTrue: [
+	unCaracter = $f ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElOeste.
 	].
-	unMensajeRecibido = 'b' ifTrue: [
+	unCaracter = $b ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElEste.
 	].
-	unMensajeRecibido = 'l' ifTrue: [
+	unCaracter = $l ifTrue: [
 		unMarsRover apuntarHaciaElSur.
 	].
-	unMensajeRecibido = 'r' ifTrue: [
+	unCaracter = $r ifTrue: [
 		unMarsRover apuntarHaciaElNorte.
 	]. ! !
 
@@ -548,21 +540,21 @@ PuntoCardinal subclass: #Sur
 	poolDictionaries: ''
 	category: 'TDDMarsRover'!
 
-!Sur methodsFor: 'as yet unclassified' stamp: 'VDM 11/3/2022 22:53:47'!
-procesarMensaje: unMensajeRecibido soy: unMarsRover 
+!Sur methodsFor: 'as yet unclassified' stamp: 'UM 11/4/2022 17:26:31'!
+procesarInstruccion: unCaracter soy: unMarsRover 
 
-	unMensajeRecibido isEmpty ifTrue: [
+	unCaracter isNil ifTrue: [
 		^ self.
 	].
-	unMensajeRecibido = 'f' ifTrue: [
+	unCaracter = $f ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElSur.
 	].
-	unMensajeRecibido = 'b' ifTrue: [
+	unCaracter = $b ifTrue: [
 		unMarsRover moveteUnPuntoHaciaElNorte.
 	].
-	unMensajeRecibido = 'l' ifTrue: [
+	unCaracter = $l ifTrue: [
 		unMarsRover apuntarHaciaElEste.
 	].
-	unMensajeRecibido = 'r' ifTrue: [
+	unCaracter = $r ifTrue: [
 		unMarsRover apuntarHaciaElOeste.
 	]. ! !
