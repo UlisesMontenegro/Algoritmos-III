@@ -15,12 +15,12 @@ test01AccountHaveZeroAsBalanceWhenCreated
 	self assert: 0 equals: account balance
 ! !
 
-!AccountTest methodsFor: 'tests' stamp: 'VDM 11/9/2022 18:41:51'!
+!AccountTest methodsFor: 'tests' stamp: 'VDM 11/9/2022 22:02:30'!
 test02DepositIncreasesBalanceOnTransactionValue 
 
 	| account |
 	
-	account := ReceptiveAccount  new.
+	account := SenderAccount  new.
 	Deposit register: 100 * peso on: account.
 		
 	self assert: 100 * peso equals: account balance
@@ -136,6 +136,110 @@ test10AlhacerUnaTransferenciaAumentaBalanceEnReceptiveAccountYDisminuyeEnSenderA
 	
 	self assert: 49*peso equals: senderAccount balance.
 ! !
+
+
+!classDefinition: #PortFolioTests category: 'ServiciosFinancieros-Ejercicio'!
+TestCase subclass: #PortFolioTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:40:34'!
+test01
+
+	| portFolio |
+	
+	portFolio := PortFolio new.
+	
+	self assert: 0 equals: portFolio cantidadDeCuentas.! !
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:41:32'!
+test02
+
+	| portFolio |
+	
+	portFolio := PortFolio new.
+	
+	self assert: 0 equals: portFolio cantidadDePortFolios.! !
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:42:36'!
+test03
+
+	| portFolio |
+	
+	portFolio := PortFolio new.
+	
+	self assert: 0 equals: portFolio balance.! !
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:53:40'!
+test04
+
+	| portFolio cuenta cuenta2 cuenta3 |
+	
+	portFolio := PortFolio new.
+	
+	cuenta := ReceptiveAccount new.
+	
+	portFolio agregar: cuenta.
+	
+	self assert: 1 equals: portFolio cantidadDeCuentas.
+	
+	cuenta2 := ReceptiveAccount new.
+	
+	portFolio agregar: cuenta2.
+	
+	self assert: 2 equals: portFolio cantidadDeCuentas.
+	
+	cuenta3 := ReceptiveAccount new.
+	
+	portFolio agregar: cuenta3.
+	
+	self assert: 3 equals: portFolio cantidadDeCuentas.! !
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:03:09'!
+test05
+
+	| portFolio portFolioA portFolioB portFolioC |
+	
+	portFolio := PortFolio new.
+	
+	portFolioA := PortFolio new.
+	
+	portFolio agregar: portFolioA.
+	
+	self assert: 1 equals: portFolio cantidadDePortFolios.
+	
+	portFolioB := PortFolio new.
+	
+	portFolio agregar: portFolioB.
+	
+	portFolioC := PortFolio new.
+	
+	portFolio agregar: portFolioC.
+	
+	self assert: 3 equals: portFolio cantidadDePortFolios.! !
+
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:22:24'!
+test06
+
+	| portFolio cuenta1 cuenta2 cuenta3 |
+	
+	portFolio := PortFolio new.
+	
+	cuenta1 := ReceptiveAccount new.
+	cuenta2 := ReceptiveAccount new.
+	cuenta3 := ReceptiveAccount new.
+	
+	Deposit register: 100*peso on: cuenta1.
+	Deposit register: 500*peso on: cuenta2.
+	Deposit register: 10*peso on: cuenta3.
+	
+	portFolio agregar: cuenta1.
+	portFolio agregar: cuenta2.
+	portFolio agregar: cuenta3.
+	
+	self assert: (cuenta1 balance + cuenta2 balance + cuenta3 balance) equals: portFolio balance.! !
 
 
 !classDefinition: #TransferTest category: 'ServiciosFinancieros-Ejercicio'!
@@ -254,10 +358,23 @@ Account subclass: #ReceptiveAccount
 	category: 'ServiciosFinancieros-Ejercicio'!
 
 
-!ReceptiveAccount methodsFor: 'main protocol' stamp: 'VDM 11/9/2022 19:48:40'!
+!ReceptiveAccount methodsFor: 'main protocol' stamp: 'VDM 11/9/2022 23:03:54'!
 balance
-
-	^transactions sum: [ :aTransaction | (aTransaction isKindOf: Withdraw) ifTrue: [aTransaction value * (-1) ] ifFalse: [aTransaction value] ] ifEmpty: [ 0 ]! !
+	^transactions sum: [ :aTransaction | (aTransaction isKindOf: Withdraw) ifTrue: [aTransaction value * (-1) ] ifFalse: [aTransaction value] ] ifEmpty: [ 0 ]
+	
+	"
+	withdraw ->  -
+	
+	Deposit ->  +
+	
+	Transfer -> +
+	
+	.....
+	
+	transfer - > +
+	....
+	'transferDeposit'
+	"! !
 
 
 !ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'VDM 11/9/2022 18:47:37'!
@@ -274,10 +391,24 @@ Account subclass: #SenderAccount
 	category: 'ServiciosFinancieros-Ejercicio'!
 
 
-!SenderAccount methodsFor: 'main protocol' stamp: 'VDM 11/9/2022 18:42:32'!
+!SenderAccount methodsFor: 'main protocol' stamp: 'VDM 11/9/2022 23:03:53'!
 balance
-
-	^transactions sum: [ :aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [aTransaction value] ifFalse: [aTransaction value * (-1)] ] ifEmpty: [ 0 ]! !
+	^transactions sum: [ :aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [aTransaction value] ifFalse: [aTransaction value * (-1)] ] ifEmpty: [ 0 ]
+	
+	"kindOf: deposit  ->    +
+	
+	kindof: withdraw  ->   -
+	
+	kindof: transfer    ->   -
+	
+	.....
+	
+	transfer - > -
+	......
+	
+	
+	'transferWithdraw'
+	"! !
 
 
 !SenderAccount methodsFor: 'as yet unclassified' stamp: 'VDM 11/9/2022 18:46:58'!
@@ -375,6 +506,41 @@ Withdraw class
 for: aValue
 
 	^ self new initializeFor: aValue ! !
+
+
+!classDefinition: #PortFolio category: 'ServiciosFinancieros-Ejercicio'!
+Object subclass: #PortFolio
+	instanceVariableNames: 'cuentas portFolios'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:07:32'!
+agregar: unaCuentaOUnPortFolio 
+	
+	(unaCuentaOUnPortFolio isKindOf: PortFolio) ifTrue:[ portFolios add: unaCuentaOUnPortFolio ] 
+		ifFalse: [ 	cuentas add: unaCuentaOUnPortFolio ].! !
+
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:13:29'!
+balance
+	
+	^cuentas sum: [:unaCuenta | unaCuenta balance] ifEmpty: [0].! !
+
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:51:30'!
+cantidadDeCuentas
+	
+	^cuentas size.! !
+
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:04:23'!
+cantidadDePortFolios
+	
+	^portFolios size.! !
+
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:04:02'!
+initialize
+
+	cuentas := OrderedCollection new.
+	portFolios := OrderedCollection new.! !
 
 
 !classDefinition: #Transfer category: 'ServiciosFinancieros-Ejercicio'!
