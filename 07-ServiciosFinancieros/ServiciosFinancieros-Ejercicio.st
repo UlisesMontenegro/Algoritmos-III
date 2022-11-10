@@ -241,6 +241,37 @@ test06
 	
 	self assert: (cuenta1 balance + cuenta2 balance + cuenta3 balance) equals: portFolio balance.! !
 
+!PortFolioTests methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 17:20:43'!
+test07
+
+	| portFolio cuenta1 cuenta2 cuenta3 portFolio2 cuenta4 cuenta5 |
+	
+	portFolio := PortFolio new.
+	portFolio2 := PortFolio new.
+	
+	cuenta1 := ReceptiveAccount new.
+	cuenta2 := ReceptiveAccount new.
+	cuenta3 := ReceptiveAccount new.
+	cuenta4 := ReceptiveAccount new.
+	cuenta5 := ReceptiveAccount new.
+	
+	Deposit register: 100*peso on: cuenta1.
+	Deposit register: 500*peso on: cuenta2.
+	Deposit register: 10*peso on: cuenta3.
+	Deposit register: 312*peso on: cuenta4.
+	Deposit register: 315*peso on: cuenta5.
+	
+	portFolio2 agregar: cuenta1.
+	portFolio2 agregar: cuenta2.
+	portFolio2 agregar: cuenta3.
+	
+	portFolio agregar: cuenta4.
+	portFolio agregar: cuenta5.
+	
+	portFolio agregar: portFolio2.
+	
+	self assert: ((cuenta4 balance + cuenta5 balance)+ portFolio2 balance) equals: portFolio balance.! !
+
 
 !classDefinition: #TransferTest category: 'ServiciosFinancieros-Ejercicio'!
 TestCase subclass: #TransferTest
@@ -521,10 +552,16 @@ agregar: unaCuentaOUnPortFolio
 	(unaCuentaOUnPortFolio isKindOf: PortFolio) ifTrue:[ portFolios add: unaCuentaOUnPortFolio ] 
 		ifFalse: [ 	cuentas add: unaCuentaOUnPortFolio ].! !
 
-!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 12:13:29'!
+!PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 17:16:13'!
 balance
 	
-	^cuentas sum: [:unaCuenta | unaCuenta balance] ifEmpty: [0].! !
+	| totalPorCuentas totalPorPortFolios |
+	totalPorCuentas := cuentas sum: [:unaCuenta | unaCuenta balance] ifEmpty: [0].
+	totalPorPortFolios := portFolios sum: [:unPortFolio | unPortFolio balance] ifEmpty: [0].
+	
+	^ totalPorCuentas + totalPorPortFolios.
+	
+	! !
 
 !PortFolio methodsFor: 'as yet unclassified' stamp: 'VDM 11/10/2022 10:51:30'!
 cantidadDeCuentas
