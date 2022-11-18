@@ -5,96 +5,119 @@ TestCase subclass: #AccountSummaryTest
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-II'!
 
-!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:53:36'!
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:53:41'!
 test01ElResumenSabeSiNoSeRealizaronTransacciones
-
 	| accountSummary cuenta |
-	
 	cuenta := ReceptiveAccount new.
-	
 	accountSummary := AccountSummary for: cuenta.
-	
-	"Character cr -> para salto de linea"
-	
-	self assert: 'NO SE REGISTRAN TRANSACCIONES.
-	Balance = 0 pesos' equals: accountSummary resumenGeneral.
+
+	self assert: ('NO SE REGISTRAN TRANSACCIONES.
+	Balance = 0 pesos') equals: accountSummary resumenGeneral.
 	self assert: (accountSummary transaccionesRealizadas: 0).! !
 
-!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:54:27'!
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:53:25'!
 test02SiSeRealizaUnDepositoSeRegistraEnElResumen
-
 	| accountSummary cuenta |
-	
 	cuenta := ReceptiveAccount new.
-	
 	Deposit register: 30 * peso on: cuenta.
-	
 	accountSummary := AccountSummary for: cuenta.
-	
-	"Character cr -> para salto de linea -> ahora uso 'String newLineString'"
-	
-	self assert: ('Depósito por 30 pesos', String newLineString, 'Balance = 30 pesos') equals: accountSummary resumenGeneral.	
+
+	self assert: ('Depósito por 30 * pesos', String newLineString, 'Balance = 30 * pesos') equals: accountSummary resumenGeneral.	
 	self assert: (accountSummary transaccionesRealizadas: 1).! !
 
-!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:54:54'!
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:53:11'!
 test03UnRetiroSeRegistraEnElResumen
-
 	| accountSummary cuenta |
-	
 	cuenta := ReceptiveAccount new.
-	
 	Withdraw register: 100 * peso on: cuenta.
-	
 	accountSummary := AccountSummary for: cuenta.
 	
-	"Character cr -> para salto de linea -> ahora uso 'String newLineString'"
-	
-	self assert: ('Extracción por 100 pesos', String newLineString, 'Balance = -100 pesos') equals: accountSummary resumenGeneral.	
+	self assert: ('Extracción por 100 * pesos', String newLineString, 'Balance = -100 * pesos') equals: accountSummary resumenGeneral.	
 	self assert: (accountSummary transaccionesRealizadas: 1).! !
 
-!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:55:31'!
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:53:01'!
 test04LasTransferenciasQuedanRegistradasEnElResumen
-
 	| accountSummary1 accountSummary2 cuenta1 cuenta2|
-	
 	cuenta1 := ReceptiveAccount new.
 	cuenta2 := ReceptiveAccount new.
-	
 	Transfer amount: 123 * peso from: cuenta1 to: cuenta2.
-	
 	accountSummary1 := AccountSummary for: cuenta1.
 	accountSummary2 := AccountSummary for: cuenta2.
-	
-	"Para salto de linea -> 'String newLineString'"
-	
-	self assert: ('Salida por transferencia de 123 pesos', String newLineString, 'Balance = -123 pesos') equals: accountSummary1 resumenGeneral.	
+	self assert: ('Salida por transferencia de 123 * pesos', String newLineString, 'Balance = -123 * pesos') equals: accountSummary1 resumenGeneral.	
 	self assert: (accountSummary1 transaccionesRealizadas: 1).
-	self assert: ('Entrada por transferencia de 123 pesos', String newLineString, 'Balance = 123 pesos') equals: accountSummary2 resumenGeneral.	
+	self assert: ('Entrada por transferencia de 123 * pesos', String newLineString, 'Balance = 123 * pesos') equals: accountSummary2 resumenGeneral.	
 	self assert: (accountSummary2 transaccionesRealizadas: 1).! !
 
-!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:56:03'!
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:52:45'!
 test05VariasTransaccionesQuedanRegistradasEnElResumen
 
 	| accountSummary cuenta1 cuenta2|
-	
 	cuenta1 := ReceptiveAccount new.
 	cuenta2 := ReceptiveAccount new.
-	
 	accountSummary := AccountSummary for: cuenta1.
-	
 	Deposit register: 100 * peso on: cuenta1.
-	
 	Withdraw register: 50 * peso on: cuenta1.
-	
 	Transfer amount: 50 * peso from: cuenta1 to: cuenta2.
-	
 	Transfer amount: 30 * peso from: cuenta2 to: cuenta1.
 	
-	"Para salto de linea -> 'String newLineString'"
+	self assert: ('Depósito por 100 * pesos', String newLineString, 'Extracción por 50 * pesos', String newLineString, 'Salida por transferencia de 50 * pesos', String newLineString, 'Entrada por transferencia de 30 * pesos', String newLineString, 'Balance = 30 * pesos') equals: accountSummary resumenGeneral.	
+	self assert: (accountSummary transaccionesRealizadas: 4).! !
+
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:30:56'!
+test06SiNoHayTransferenciasElResumenNetoDeTransferenciasDaCero
+
+	| accountSummary cuenta |
+	cuenta := ReceptiveAccount new.
+	accountSummary := AccountSummary for: cuenta.
 	
-	self assert: ('Depósito por 100 pesos', String newLineString, 'Extracción por 50 pesos', String newLineString, 'Salida por transferencia de 50 pesos', String newLineString, 'Entrada por transferencia de 30 pesos', String newLineString, 'Balance = 30 pesos') equals: accountSummary resumenGeneral.	
-	self assert: (accountSummary transaccionesRealizadas: 4).
-	self assert: (accountSummary balance: cuenta1 balance).! !
+	Deposit register: 50*peso on: cuenta.
+	
+	self assert: 0 * peso equals: (accountSummary reporteNetoDe: cuenta transfers).! !
+
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:46:28'!
+test07AlRealizarUnaTransferenciaSeVeReflejadaEnElRporteNetoDeTransferenciasDeCadaPata
+
+	| accountSummary1 cuenta1 cuenta2 accountSummary2 |
+	cuenta1 := ReceptiveAccount new.
+	cuenta2 := ReceptiveAccount new.
+
+	accountSummary1 := AccountSummary for: cuenta1.
+	accountSummary2 := AccountSummary for: cuenta2.
+	
+	Transfer amount: 100 * peso from: cuenta1 to: cuenta2.
+	
+	self assert: -100 * peso equals: (accountSummary1 reporteNetoDe: cuenta1 transfers).
+
+	self assert: 100 * peso equals: (accountSummary2 reporteNetoDe: cuenta2 transfers).! !
+
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:32:43'!
+test08VariasTransaccionesSeVenReflejadasEnElReporteNetoDeTransferencias
+
+	| accountSummary cuenta1 cuenta2|
+	cuenta1 := ReceptiveAccount new.
+	cuenta2 := ReceptiveAccount new.
+	accountSummary := AccountSummary for: cuenta1.
+	Deposit register: 100 * peso on: cuenta1.
+	Withdraw register: 50 * peso on: cuenta1.
+	Transfer amount: 20 * peso from: cuenta1 to: cuenta2.
+	Transfer amount: 30 * peso from: cuenta2 to: cuenta1.
+	
+	self assert: 10 * peso equals: (accountSummary reporteNetoDe: cuenta1 transfers).	! !
+
+!AccountSummaryTest methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:47:28'!
+test09DECIDIRSILODEJAMOS
+
+	| accountSummary cuenta1 cuenta2|
+	cuenta1 := ReceptiveAccount new.
+	cuenta2 := ReceptiveAccount new.
+	accountSummary := AccountSummary for: cuenta1.
+	Deposit register: 100 * peso on: cuenta1.
+	Withdraw register: 50 * peso on: cuenta1.
+	Transfer amount: 20 * peso from: cuenta1 to: cuenta2.
+	Transfer amount: 30 * peso from: cuenta2 to: cuenta1.
+	
+	self assert: 100 * peso equals: (accountSummary reporteNetoDe: cuenta1 deposits).	
+	self assert: 50 * peso equals: (accountSummary reporteNetoDe: cuenta1 withdraws).! !
 
 
 !classDefinition: #PortfolioTest category: 'ServiciosFinancieros-II'!
@@ -444,10 +467,10 @@ initialize
 	accounts := OrderedCollection new.! !
 
 
-!Portfolio methodsFor: 'main protocol' stamp: 'HAW 5/25/2019 11:19:36'!
+!Portfolio methodsFor: 'main protocol' stamp: 'UM 11/17/2022 18:45:42'!
 balance
 	
-	^accounts sum: [ :anAccount | anAccount balance ] ifEmpty: [ 0 ]! !
+	^accounts sum: [ :anAccount | anAccount balance ] ifEmpty: [ 0*peso ]! !
 
 !Portfolio methodsFor: 'main protocol' stamp: 'HAW 5/25/2019 11:28:29'!
 hasRegistered: aTransaction
@@ -513,11 +536,11 @@ initialize
 	transactions := OrderedCollection new.! !
 
 
-!ReceptiveAccount methodsFor: 'main protocol' stamp: 'HAW 5/25/2019 11:24:46'!
+!ReceptiveAccount methodsFor: 'main protocol' stamp: 'UM 11/17/2022 18:45:36'!
 balance
 
 	^transactions 
-		inject: 0
+		inject: 0*peso
 		into: [ :currentBalance :transaction | transaction affectBalance: currentBalance ]! !
 
 !ReceptiveAccount methodsFor: 'main protocol' stamp: 'NR 10/21/2019 18:55:56'!
@@ -543,6 +566,22 @@ addTransactionsTo: aCollectionOfTransactions
 
 	aCollectionOfTransactions addAll: transactions ! !
 
+
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:18:54'!
+deposits
+	
+	^transactions select: [:transaction | transaction isKindOf: Deposit].! !
+
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 19:46:37'!
+transfers
+	
+	^transactions select: [:transaction | transaction isKindOf: TransferLeg].! !
+
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:20:26'!
+withdraws
+	
+	^transactions select: [:aTransaction | aTransaction isKindOf: Withdraw].! !
+
 
 !classDefinition: #AccountSummary category: 'ServiciosFinancieros-II'!
 Object subclass: #AccountSummary
@@ -551,8 +590,8 @@ Object subclass: #AccountSummary
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-II'!
 
-!AccountSummary methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:45:47'!
-balance: aSimpleMeasure 
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 19:13:13'!
+balanceCAMBIAR: aSimpleMeasure 
 	
 	| balance |
 	balance := 0.
@@ -562,120 +601,89 @@ balance: aSimpleMeasure
 	
 	^ aSimpleMeasure = balance.! !
 
-!AccountSummary methodsFor: 'as yet unclassified' stamp: 'VDM 11/16/2022 09:28:23'!
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 18:41:05'!
 inicializeFor: aReceptiveAccount 
 
 	cuentaAsociada := aReceptiveAccount.
 	! !
 
-!AccountSummary methodsFor: 'as yet unclassified' stamp: 'VDM 11/17/2022 08:51:14'!
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 21:45:36'!
+reporteNetoDe: aCollectionOfTransactions
+
+	| balance |
+	
+	balance := 0 * peso.
+	aCollectionOfTransactions do: [:aTransaction | balance := aTransaction affectBalance: balance].
+	
+	(aCollectionOfTransactions allSatisfy: [:aTransaction | aTransaction isKindOf: Withdraw]) ifTrue: [^ (-1)*balance].
+	
+	^balance.! !
+
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 20:55:35'!
 resumenGeneral
-	
-	| nombreTransaccion valorDeLaTransaccion moneda textoADevolver lineaFinal lineas nuevaLinea balance|
-	
+	| nombreTransaccion textoADevolver lineaFinal lineas nuevaLinea balance|
 	lineas := OrderedCollection new.
-	balance := 0.
+	balance := 0*peso.
 	textoADevolver := ''.
-	
 	(cuentaAsociada transactions size) isZero ifTrue: [^ 'NO SE REGISTRAN TRANSACCIONES.
 	Balance = 0 pesos'].
-	
 	cuentaAsociada transactions do: [:transaction |
 		(transaction isKindOf: Deposit) ifTrue: [
-			nombreTransaccion := 'Depósito por '.
+			nombreTransaccion := 'Depósito por ', (transaction value) asString.
 			].
 		(transaction isKindOf: Withdraw) ifTrue: [
-			nombreTransaccion := 'Extracción por '.
+			nombreTransaccion := 'Extracción por ', (transaction value) asString.
 			].
 		(transaction isKindOf: TransferWithdrawLeg) ifTrue: [
-			nombreTransaccion := 'Salida por transferencia de '.
+			nombreTransaccion := 'Salida por transferencia de ', (transaction value) asString.
 			].
 		(transaction isKindOf: TransferDepositLeg) ifTrue: [
-			nombreTransaccion := 'Entrada por transferencia de '.
+			nombreTransaccion := 'Entrada por transferencia de ', (transaction value) asString.
 			].
 	
-		valorDeLaTransaccion := transaction value amount asString.
-		moneda := transaction value unit nameForMany.
-		balance := transaction affectBalance: balance.	
-		
-		nuevaLinea := (nombreTransaccion, valorDeLaTransaccion, ' ', moneda).
+		balance := transaction affectBalance: balance.		
+		nuevaLinea := (nombreTransaccion).
 		lineas add: nuevaLinea.
-		
 		].
 		
 	lineas do: [:linea |
 		textoADevolver := textoADevolver, linea, String newLineString.
 		].
 	
-	"Esto es por si el balance da negativo"
-	(balance isKindOf: CompoundMeasure) ifTrue: [ 
-		balance := balance measures at: 1.
-		].
-	
-	lineaFinal := 'Balance = ', balance amount asString, ' ', moneda.
-	
+	lineaFinal := 'Balance = ', balance asString.
 	textoADevolver := textoADevolver, lineaFinal.
+	^ textoADevolver.! !
+
+!AccountSummary methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 19:55:48'!
+resumenNetoDeTransferencias
 	
-	^ textoADevolver.
+	|lineas balance lineaFinal textoADevolver nombreTransaccion|
 	
-	"((cuentaAsociada transactions at: 1) isKindOf: Deposit) ifTrue: [
-				
-		nombreTransaccion := 'Depósito por '.
-		
-		valorDeLaTransaccion := (cuentaAsociada transactions at: 1) value amount asString.
-		
-		valorDeLaTransaccionParaBalance := valorDeLaTransaccion.
-		
-		moneda := (cuentaAsociada transactions at: 1) value unit nameForMany.
-		
-		lineaFinal := 'Balance = ', valorDeLaTransaccionParaBalance, ' ', moneda.
-		
-		].
-	((cuentaAsociada transactions at: 1) isKindOf: Withdraw ) ifTrue: [
-				
-		nombreTransaccion := 'Retiro por '.
-		
-		valorDeLaTransaccion := (cuentaAsociada transactions at: 1) value amount asString.
-		
-		valorDeLaTransaccionParaBalance := (((cuentaAsociada transactions at: 1) value amount) * -1 )asString.
-		
-		moneda := (cuentaAsociada transactions at: 1) value unit nameForMany.
-		
-		lineaFinal := 'Balance = ', valorDeLaTransaccionParaBalance, ' ', moneda.
-		
-		].
+	lineas := OrderedCollection new.
+	balance := 0 * peso.
+	textoADevolver := ''.
 	
-	((cuentaAsociada transactions at: 1) isKindOf: TransferWithdrawLeg ) ifTrue: [
-				
-		nombreTransaccion := 'Salida por transferencia de '.
-		
-		valorDeLaTransaccion := (cuentaAsociada transactions at: 1) value amount asString.
-		
-		valorDeLaTransaccionParaBalance := (((cuentaAsociada transactions at: 1) value amount) * -1 )asString.
-		
-		moneda := (cuentaAsociada transactions at: 1) value unit nameForMany.
-		
-		lineaFinal := 'Balance = ', valorDeLaTransaccionParaBalance, ' ', moneda.
-		
-		].
+	(cuentaAsociada transfers size = 0) ifTrue: [^'NO SE REGISTRAN TRANSFERENCIAS.
+Balance = 0 * pesos'].
+
+	cuentaAsociada transfers do: [:transfer | (transfer isKindOf: TransferWithdrawLeg) ifTrue: [
+			nombreTransaccion := 'Salida por transferencia de ', (transfer value) asString
+			].
+		(transfer isKindOf: TransferDepositLeg) ifTrue: [
+			nombreTransaccion := 'Entrada por transferencia de ', (transfer value) asString
+			].
 	
-	((cuentaAsociada transactions at: 1) isKindOf: TransferDepositLeg ) ifTrue: [
-				
-		nombreTransaccion := 'Entrada por transferencia de '.
-		
-		valorDeLaTransaccion := (cuentaAsociada transactions at: 1) value amount asString.
-		
-		valorDeLaTransaccionParaBalance := valorDeLaTransaccion.
-		
-		moneda := (cuentaAsociada transactions at: 1) value unit nameForMany.
-		
-		lineaFinal := 'Balance = ', valorDeLaTransaccionParaBalance, ' ', moneda.
-		
-		].
+	balance := transfer affectBalance: balance.
 	
-	textoADevolver := nombreTransaccion, valorDeLaTransaccion, ' ', moneda, String newLineString , lineaFinal.
+	lineas add: nombreTransaccion.
 	
-	^ textoADevolver."! !
+	]. 
+
+	lineas do: [:linea | textoADevolver := textoADevolver, linea, String newLineString].
+	
+	lineaFinal := 'Balance = ', balance asString.
+	^textoADevolver := textoADevolver, lineaFinal.
+	! !
 
 !AccountSummary methodsFor: 'as yet unclassified' stamp: 'VDM 11/16/2022 19:38:49'!
 transaccionesRealizadas: aSmallInteger 
@@ -687,7 +695,7 @@ transaccionesRealizadas: aSmallInteger
 AccountSummary class
 	instanceVariableNames: ''!
 
-!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'VDM 11/16/2022 09:11:14'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'UM 11/17/2022 18:40:52'!
 for: aReceptiveAccount 
 	^ self new
 		inicializeFor: aReceptiveAccount.! !
